@@ -1,0 +1,30 @@
+{% load static %}
+<html>
+    <head>
+        <title>
+            Quote of the Day!
+        </title>
+        <link rel="stylesheet" href ="{% static 'styles.css' %}">
+    </head>
+    <body>
+        <nav>
+            <li>
+                <a href="{% url 'quote_page' %}">Quote of the Day</a>
+            </li>
+            <li>
+                <a href="{% url 'about_page' %}">About</a>
+            </li>
+            <li>
+                <a href="{% url 'show_all_page' %}">Show All</a>
+            </li>
+        </nav>
+        <!-- put page specific info here-->
+        {%block content%}
+        {%endblock%}
+         <footer>
+            The current time is {{current_time}}. <br>
+            Page Created By eshaaw@bu.edu
+        </footer>
+        </footer>
+    </body>
+</html>

@@ -1,0 +1,22 @@
+{% extends 'quotes/base.html'%}
+{%block content%}
+{% load static%}
+
+<h1>
+    Welcome!
+</h1>
+
+<p> Welcome to the Quote of the Day Application!</p>
+<p> This application displays Quotes by <a href="https://www.janeausten.org/"> <b>Jane Austen</b></a></p>
+<p> Jane Austen was an English novelist whose works include <i>Pride and Prejudice</i>, <i> Emma</i>, <i>Sense and Sensibility</i> and <i>Persuasion</i>. 
+    Her works guided the era of Novels during the 1800's. She was known for being witty, ironic and social. Even though her works were published
+anonomously, they have become classics in modern day literature </p>
+<img src="{% static '' %}{{ image }}" alt="Image of Jane Austen">
+<h1>About Me!</h1>
+<p>My Name is Esha Wadher! I am currently a Senior at Boston University with an interest in System and Web Application design.
+    I was born in San Francisco, CA. I enjoy traveling, hiking, and painting! 
+</p>
+
+<img src="{% static 'eshawithgiraffe.JPG' %}" alt="Photo with giraffe">
+
+{% endblock %}

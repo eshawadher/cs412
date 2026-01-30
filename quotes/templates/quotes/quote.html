@@ -1,0 +1,8 @@
+{% extends 'quotes/base.html'%}
+{%block content%}
+{% load static%}
+<h2> Jane Austen Quote of the Day</h2>
+
+<p> {{quote}}</p>
+<img src="{% static '' %}{{ image }}" alt="Image of Jane Austen">
+{% endblock %}
