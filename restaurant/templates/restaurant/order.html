@@ -1,0 +1,86 @@
+{% extends 'restaurant/base.html'%}
+{%block content%}
+<div>
+    <h1> Place Your Order </h1>
+    <form  action="{% url 'confirmation' %}" method="post">
+        {% csrf_token %}
+        <h2> Menu Items</h2>
+        <div>
+            <input type="checkbox" id="tapas" name="tapas" value="on">
+            <label for="tapas">
+                <strong>Tapas Platter</strong> - $16.99
+                <p> Assortment of Spanish small plates</p>
+            </label>
+        </div>
+        <div>
+            <input type="checkbox" id="paella" name="paella" value="on">
+            <label for="paella">
+                <strong>Paella</strong> - $24.99
+                <p>Traditional Spanish rice dish</p>
+                <div>
+                    <label> Choose your style:</label>
+                    <select name="paella_extras">
+                         <option value="Seafood">Seafood</option>
+                         <option value="Chicken">Chicken</option>
+                         <option value="Vegetarian">Vegetarian</option>
+                         <option value="Mixed">Mixed</option>
+                    </select>
+                </div>
+        </div>
+        <div class="menu-item">
+            <input type="checkbox" id="sangria" name="sangria" value="on">
+            <label for="sangria">
+                <strong> Sangria Pitcher</strong> - $18.99
+                <p> Red or White Wine with Fresh Fruit</p>
+            </label>
+        </div>
+        <div>
+            <input type="checkbox" id="churros" name="churros" value="on">
+            <label for="churros">
+                <strong>Churros with Chocolate</strong> - $8.99
+                <p>Crispy fried dough with warm chocolate dipping sauce</p>
+            </label>
+        </div>
+        <div>
+            <input type="checkbox" id="daily_special" name="daily_special" value="on">
+            <label for="daily_special">
+                <strong>TODAY'S SPECIAL: {{ daily_special.name }}</strong> - ${{ daily_special.price }}
+                <p>{{ daily_special.description }}</p>
+            </label>
+            <input type="hidden" name="daily_special_name" value="{{ daily_special.name }}">
+            <input type="hidden" name="daily_special_price" value="{{ daily_special.price }}">
+        </div>
+        <hr>
+        <h2> Special Instructions</h2>
+        <div>
+            <label for="special_instructions"> Any special requests or dietary restrictions?</label>
+            <textarea id="special_instructions" name="special_instructions" rows="4" cols="50" placeholder="Enter any special instructions here..."></textarea>
+        </div>
+        <hr>
+        <h2>Customer Information</h2>
+        <div>
+            <label for="name">Name: <span style="color: red;">*</span></label>
+            <input type="text" id="name" name="name" required>
+        </div>
+        
+        <div>
+            <label for="phone">Phone: <span style="color: red;">*</span></label>
+            <input type="tel" id="phone" name="phone" placeholder="(123) 456-7890" required>
+        </div>
+        
+        <div>
+            <label for="email">Email: <span style="color: red;">*</span></label>
+            <input type="email" id="email" name="email" placeholder="your@email.com" required>
+        </div>
+        
+        <br>
+        <div>
+            <input type="submit" value="Place Order">
+        </div>
+        </form>
+<div c
+{% endblock %}
+        
+    
+        
+    

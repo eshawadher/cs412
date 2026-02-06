@@ -1,34 +1,47 @@
 body {
-    background-color: #fff;
-    color: slategray;
-    font-family: Copperplate;
+    background-color: black;
+    color: white;
+    font-family: 'Georgia', 'Times New Roman', serif; /* Change to serif font */
     max-width: 960px;
     margin: 20px auto;
     padding: 0;
+    padding-bottom: 100px;
+    min-height: 100vh;
+    line-height: 1.6; /* ADD THIS - better line spacing */
+    font-size: 18px; /* ADD THIS - slightly larger text */
 }
 
-h1,h2,h3,h4,h5{
+h1, h2, h3, h4, h5 {
     font-weight: normal;
-    background: aliceblue;
     text-align: center;
     margin: 0;
     margin-left: calc(-50vw + 50%);
     margin-right: calc(-50vw + 50%);
     width: 100vw;
-    padding: 10px, 20px;
+    padding: 10px 20px;
     box-sizing: border-box;
+    font-size: calc(2rem);
+    letter-spacing: 0.2em;
+    text-transform: uppercase; 
+}
+
+h2,h3,h4,h5{
+    font-size: calc(2rem/2);
 }
 
 
 a, a:visited {
-    color: slategrey;
+    color: white;
     text-decoration: none;
+}
+html{
+    scroll-behavior: smooth;
 }
 
 a:hover {
-    color: darkblue;
+    color: #25343F;
     text-decoration: none;
-    background-color: white;
+    /* background-color: white; */
     /* font-weight: bold; */
 }
 
@@ -40,27 +53,40 @@ a:hover {
 
 header {
     width: 100vw;
-    margin-left: calc(-50vw + 50%);
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    background:aliceblue;
-    position: fixed;
-    top: 0px;
+    margin-inline-start: calc(-50vw + 50%);
+    position: relative;
+    bottom: 0px;
+    padding: 10px 20px;
     left: 0;
-    z-index: 999;
-    font-family: Copperplate;
-    padding-right: 10px 20px;
+    text-align: center;
+    font-size: calc(2rem + 1.5vw);
+    font-family: "Montserrat", sans-serif;
+    letter-spacing: 0.2em;
+    text-transform: uppercase; 
+    background-color: rgba(44, 62, 80, 0.8);
+
+} 
+
+header h1 {
+    margin: 0;
+    font-size: calc(2rem + 1.5vw);
+    letter-spacing: 0.15em; /* ADD THIS for header specifically */
+    text-transform: uppercase; /* ADD THIS */
 }
 
 footer {
     width: 100vw;
     margin-inline-start: calc(-50vw + 50%);
-    background:aliceblue;
-    position: fixed;
+    background-color: rgba(44, 62, 80, 0.8);
+    position: relative;
     bottom: 0px;
     padding: 10px 20px;
     left: 0;
     text-align: center;
+    font-family: "Montserrat", sans-serif;
+    letter-spacing: 0.2em;
+    text-transform: uppercase; 
+    color: white;
 }
 
 
@@ -102,21 +128,32 @@ section {
 
 
 nav {
-    justify-self: end;
+    /* justify-self: end; */
     background: none;
-    color: darkblue;
+    color: #25343F;
+    /* padding: 10px 0; */
     /* border: 1px solid; */
 }
 
 nav li {
     display: inline-block;
-    margin-left: 20px;
+}
+
+nav li a{
+    color: darkblue;
+    text-decoration: none;
+    padding: 10px 15px;
+    display: inline-block; /* Make the whole area clickable */
+    font-weight: bold;
+}
+nav li :hover{
+    color: white;
 }
 
 nav button {
     background: none;
     color: slategray;
-    font-family: Copperplate;
+    font-family: "Montserrat", sans-serif;
     cursor: pointer; 
     border: 0;
     font-size: 1.2 em;
@@ -147,7 +184,7 @@ nav button {
 
 .mc-table-row  {
     display: table-row;
-    border: 1px dashed darkblue;    /*border around each row */
+    border: 1px dashed white;    
     background-color: white;
 }
 
@@ -225,6 +262,76 @@ img{
     height: 400px; 
     object-fit: cover;
 }
+.main-page{
+    padding: 20px;
+}
+
+.intro-text{
+    text-align: center;
+    max-width: 800px;
+    margin: 20px auto;
+    line-height: 1.8;
+    font-size: 17px;
+}
+.restaurant-img{
+    text-align: center;
+    margin: 30px 0;
+}
+.info-grid{
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 0;
+    border: 1px solid #ddd;
+    margin: 50px auto;
+    max-width: 1200px;
+}
+
+.info-column{
+    border-right: 1px solid #ddd;
+    padding: 40px 30px;
+    text-align: center;
+}
+
+.info-column h3{
+    font-size: 1.2 rem;
+    letter-spacing: 0.15em;
+    margin-bottom: 30px;
+    font-weight: 600;
+    text-transform: uppercase;
+}
+
+.info-column p{
+    margin-bottom: 20px;
+    line-height: 1.6;
+    font-size: 15px;
+}
+
+.info-column strong{
+    font-weight: 600;
+    text-transform: uppercase;
+    font-size: 13px;
+    letter-spacing: 0.05em;
+}
+
+.outline{
+    display: inline-block;
+    padding: 12px 25px;
+    border: 2px solid white;
+    color: white;
+    text-decoration: non;
+    text-transform: uppercase;
+    font-size: 13px;
+    letter-spacing: 0.1em;
+    font-weight: 600;
+    transition: all 0.3s;
+    margin: 10px 0;
+}
+.outline:hover{
+    background-color: #333;
+    color: white;
+}
+
+
 
 
 /* responsive styles when width is less than 1400px */
@@ -243,7 +350,7 @@ img{
     nav button {
         background: none;
         color: slategray;
-        font-family: Arial;
+        font-family: "Montserrat", sans-serif;;
         cursor: pointer; 
         border: 0;
         font-size: 20px;

@@ -9,4 +9,3 @@ urlpatterns = [
     path(r'about', views.about, name='about_page'),
 ]
 #urlpatterns + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
-

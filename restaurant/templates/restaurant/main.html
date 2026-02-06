@@ -1,0 +1,49 @@
+{% extends 'restaurant/base.html'%}
+{% load static %}
+{% block content%}
+
+<div class="main-page">
+    <h2>Welcome to Barcelona Wine Bar!</h2>
+
+    <p class="intro-text">
+        Experience authentic Spanish cuisine and wines in the heart of Brookline.
+        Our tapas-style dining brings the flavors of Barcelona to Boston.
+    </p>
+
+    <div class="restaurant-img">
+        <img src="{% static 'barthelona.jpeg' %}" alt="Barcelona Wine Bar interior">
+    </div>
+
+    <div class="info-grid">
+
+        <div class="info-column">
+            <h3>HOURS</h3>
+            <div>
+                <p><strong>MONDAY - THURSDAY</strong><br>4pm - 11pm</p>
+                <p><strong>FRIDAY</strong><br>4pm - 12am</p>
+                <p><strong>SATURDAY</strong><br>4pm - 12am</p>
+                <p><strong>SUNDAY</strong><br>4pm - 10pm</p>
+            </div>
+        </div>
+
+        <div class="info-column">
+            <h3>VISIT US</h3>
+            <div>
+                <p><strong>1700 Beacon Street</strong><br>Brookline, MA 02445</p>
+                <p>OR CALL <strong>(617) 264-8900</strong></p>
+                <p>
+                    <a href="{% url 'order' %}" class="outline">ORDER ONLINE</a>
+                </p>
+            </div>
+        </div>
+
+        <div class="info-column">
+            <h3>MENU & MORE</h3>
+            <div>
+                <p><a href="{% url 'order' %}" class="outline">DINNER MENU</a></p>
+            </div>
+        </div>
+
+    </div>
+</div>
+{% endblock %}
