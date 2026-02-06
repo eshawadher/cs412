@@ -3,47 +3,42 @@
 <div>
     <h2>Order Confirmation</h2>
     <p>Thank you for your order, {{ name }}!</p>
-    
+
     <div>
         <h2>Order Summary</h2>
-        
+
         <h3>Items Ordered:</h3>
-        {% if ordered_items %}
-            <ul class="ordered-items">
-            {% for item in ordered_items %}
-                <li>{{ item }}</li>
-            {% endfor %}
-            </ul>
-        {% else %}
-            <p>No items selected.</p>
-        {% endif %}
-        
+        <ul class="ordered-items">
+            <li>{{ item }}</li>
+        </ul>
+        <p>No items selected.</p>
+
         <h3>Total Price:</h3>
         <p><strong>${{ total_price|floatformat:2 }}</strong></p>
-        
-        {% if special_instructions %}
+
+
         <h3>Special Instructions:</h3>
         <p class="special-instructions">{{ special_instructions }}</p>
-        {% endif %}
+
     </div>
-    
+
     <div class="customer-info">
         <h2>Customer Information</h2>
         <p><strong>Name:</strong> {{ name }}</p>
         <p><strong>Phone:</strong> {{ phone }}</p>
         <p><strong>Email:</strong> {{ email }}</p>
     </div>
-    
+
     <div class="pickup-info">
         <h2>Pickup Information</h2>
         <p class="ready-time">
-            <strong>Your order will be ready at:</strong> 
+            <strong>Your order will be ready at:</strong>
             {{ ready_time|date:"g:i A" }} on {{ ready_time|date:"l, F j, Y" }}
         </p>
         <p>Please arrive at the specified time to pick up your order.</p>
         <p>A confirmation email has been sent to {{ email }}.</p>
     </div>
-    
+
     <div class="action-buttons">
         <a href="{% url 'main' %}">← Back to Home</a>
         <a href="{% url 'order' %}">Place Another Order →</a>
@@ -51,6 +46,3 @@
 </div>
 
 {% endblock%}
-
-
-

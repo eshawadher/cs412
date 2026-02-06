@@ -2,7 +2,7 @@
 {%block content%}
 <div>
     <h1> Place Your Order </h1>
-    <form  action="{% url 'confirmation' %}" method="post">
+    <form action="{% url 'confirmation' %}" method="post">
         {% csrf_token %}
         <h2> Menu Items</h2>
         <div>
@@ -20,10 +20,10 @@
                 <div>
                     <label> Choose your style:</label>
                     <select name="paella_extras">
-                         <option value="Seafood">Seafood</option>
-                         <option value="Chicken">Chicken</option>
-                         <option value="Vegetarian">Vegetarian</option>
-                         <option value="Mixed">Mixed</option>
+                        <option value="Seafood">Seafood</option>
+                        <option value="Chicken">Chicken</option>
+                        <option value="Vegetarian">Vegetarian</option>
+                        <option value="Mixed">Mixed</option>
                     </select>
                 </div>
         </div>
@@ -54,7 +54,8 @@
         <h2> Special Instructions</h2>
         <div>
             <label for="special_instructions"> Any special requests or dietary restrictions?</label>
-            <textarea id="special_instructions" name="special_instructions" rows="4" cols="50" placeholder="Enter any special instructions here..."></textarea>
+            <textarea id="special_instructions" name="special_instructions" rows="4" cols="50"
+                placeholder="Enter any special instructions here..."></textarea>
         </div>
         <hr>
         <h2>Customer Information</h2>
@@ -62,25 +63,20 @@
             <label for="name">Name: <span style="color: red;">*</span></label>
             <input type="text" id="name" name="name" required>
         </div>
-        
+
         <div>
             <label for="phone">Phone: <span style="color: red;">*</span></label>
             <input type="tel" id="phone" name="phone" placeholder="(123) 456-7890" required>
         </div>
-        
+
         <div>
             <label for="email">Email: <span style="color: red;">*</span></label>
             <input type="email" id="email" name="email" placeholder="your@email.com" required>
         </div>
-        
+
         <br>
         <div>
             <input type="submit" value="Place Order">
         </div>
-        </form>
-<div c
-{% endblock %}
-        
-    
-        
-    
+    </form>
+    <div c {% endblock %}
