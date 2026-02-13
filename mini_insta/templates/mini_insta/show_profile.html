@@ -1,0 +1,29 @@
+<!--
+File: show_profile.html
+Author: Esha Wadher (eshaaw@bu.edu), 02/13/2026
+Description:
+Template that displays a single user's profile in the Mini Insta
+application. This page receives one Profile object from the view
+based on the selected profile's primary key and shows the user's
+display name, username, profile image, biography text, and join date.
+-->
+
+{% extends 'mini_insta/base.html' %}
+{% block content %}
+<div class="content-container">
+<h1>{{ profile.display_name }}</h1>
+<h2>@{{ profile.username }}</h2>
+
+<div style="max-width: 500px;">
+    <img src="{{ profile.profile_image_url }}" alt="{{ profile.username }}" style="width: 100%; border-radius: 10px;">
+</div>
+
+<div style="margin-top: 20px;">
+    <h3>Bio</h3>
+    <p>{{ profile.bio_text }}</p>
+    
+    <h3>Member Since</h3>
+    <p>{{ profile.join_date }}</p>
+</div>
+</div>
+{% endblock %}

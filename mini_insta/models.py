@@ -1,3 +1,10 @@
+# File: models.py
+# Author: Esha Wadher (eshaaw@bu.edu), 02/13/2026
+# Description:
+# The Profile model represents a user's profile and stores
+# information such as username, display name, profile image URL,
+# biography text, and the date the profile was created.
+
 from django.db import models
 
 # # Create your models here.

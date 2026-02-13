@@ -1,9 +1,18 @@
+<!--
+File: base.html
+Author: Esha Wadher (eshaaw@bu.edu), 02/13/2026
+Description:
+Base template for the Mini Insta website. This file defines the
+overall page layout and includes the shared navigation bar and
+content blocks that other templates extend.
+-->
+
 {% load static %}
 <html>
 
 <head>
     <title>MINI INSTA</title>
-    <link rel="stylesheet" href="{% static 'styles-blog.css'%}">
+    <link rel="stylesheet" href="{% static 'styles-blog.css' %}?v=1">
 </head>
 
 <body>
@@ -16,9 +25,10 @@
 
     {% block content %}
     {% endblock %}
-     <footer>
-        <!-- The current time is {{current_time}}. <br> -->
-        Page Created By eshaaw@bu.edu
+    <footer>
+        <a href="{% url 'show_all_profiles' %}">
+            Back to all profiles
+        </a>
     </footer>
 
 </body>

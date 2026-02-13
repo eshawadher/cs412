@@ -3,7 +3,7 @@
 body {
     margin: 30px;
     background: #d1dedd;
-    font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-family: "Copperplate", "Copperplate Gothic Light", "Copperplate Gothic Bold", sans-serif;
 }
 
 ul, li {
@@ -22,7 +22,50 @@ p {
 header {
     max-width: 1200px;
     margin: 40px auto;
+    padding: 0 10px;
     border-bottom: 1px solid #bbc7c7;
+    
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 20px;
+}
+
+header nav a{
+    display: inline-block;
+    padding: 8px 14px;
+    border: 1px solid #bbc7c7;
+    border-radius: 999px;
+    background: #eef2f1;
+    color: #5f6a69;
+    text-decoration: none;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+}
+
+header nav a:hover{
+    background: #e2e9e8;
+    color: #3f4a49;
+}
+footer{
+    max-width: 1200px;
+    margin: 30px auto 10px;
+    padding: 16px 10px;
+    border-top: 1px solid #bbc7c7;
+    color: #6f7877;
+    font-size: 0.95rem;
+}
+footer a{
+    color: #5f6a69;
+    text-decoration: none;
+    font-weight: 600;
+}
+footer a:hover{
+    text-decoration: underline;
+}
+
+a, a:visited{
+    color: inherit;
 }
 .grid-container {
     background: #eee;
@@ -34,6 +77,13 @@ header {
     max-width: 1200px;
     margin: 20px auto;
 }
+
+.content-container {
+    max-width: 1200px;
+    margin: 20px auto;
+    padding: 0 10px;
+}
+
 
 article.featured {
     grid-column: span 3;
@@ -47,8 +97,12 @@ article.featured {
 
 article img, article.featured img {
     width: 100%;
+    height: 260px;
+    object-fit: cover;
+    object-position: center;
     border: 4px solid #fff;
     border-radius: 8px;
+    display: block;
 }
 article p, article h3 {
     margin: 20px 10px;
