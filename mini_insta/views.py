@@ -8,8 +8,10 @@
 # to display information for a single profile.
 
 from django.shortcuts import render
-from django.views.generic import ListView, DetailView
-from .models import Profile,Post
+from django.views.generic import ListView, DetailView, CreateView
+from .models import Profile,Post, Photo
+from .forms import CreatePostForm
+from django.urls import reverse
 
 # Create your views here.
 class ProfileListView(ListView):
@@ -29,3 +31,28 @@ class PostDetailView(DetailView):
     model = Post
     template_name = 'mini_insta/show_post.html'
     context_object_name = 'post'
+class CreatePostView(CreateView):
+    '''hadnle creation of a new post for a given prof'''
+    form_class = CreatePostForm
+    template_name = 'mini_insta/create_post_form.html'
+
+    def get_context_data(self, **kwargs):
+        '''add prof object to the template context'''
+        context = super().get_context_data(**kwargs)
+        pk = self.kwargs['pk']
+        profile = Profile.objects.get(pk=pk)
+        context['profile'] = profile
+        return context
+    def get_success_url(self):
+        '''Redirect to the newly created post's detail page.'''
+        return reverse('show_post', kwargs={'pk': self.object.pk})
+    def form_valid(self, form):
+        '''Attach the Profile FK to the Post, then create a Photo.'''
+        pk = self.kwargs['pk']
+        profile = Profile.objects.get(pk=pk)
+        form.instance.profile = profile
+        saved_form = super().form_valid(form)
+        image_url = form.cleaned_data.get('image_url')
+        if image_url:
+            Photo.objects.create(post=self.object, image_url=image_url)
+        return saved_form

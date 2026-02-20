@@ -1,0 +1,22 @@
+<!--
+File: create_post_form.html
+Author: Esha Wadher (eshaaw@bu.edu), 02/20/2026
+Description:
+Template that displays the form to create a new Post.
+-->
+
+{% extends 'mini_insta/base.html'%}
+{% block content%}
+
+<div class="content-container">
+    <h2>Create New Post from @{{profile.username}}</h2>
+    <form action="{%url 'create_post' profile.pk %}" method="Post">
+        {%csrf_token%}
+        {{form.as_p}}
+        <button type="submit">Post</button>
+        <a href="{% url 'show_profile' profile.pk%}">
+            <button type="button">Cancel</button>
+        </a>
+    </form>
+</div>
+{%endblock%}
