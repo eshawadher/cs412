@@ -1,7 +1,9 @@
 from django.shortcuts import render
-from django.views.generic import ListView, DetailView
+from django.views.generic import ListView, DetailView, CreateView
 from .models import Article
+from .forms import CreateArticleForm,CreateCommentForm
 import random
+from django.urls import reverse
 # Create your views here.
 class ShowAllViews(ListView):
     '''Define a view class to show all blog Article'''
@@ -28,3 +30,39 @@ class RandomArticleView(DetailView):
         all_articles = Article.objects.all()
         article = random.choice(all_articles)
         return article
+    
+class CreateArticleView(CreateView):
+    '''A view to handle creation of a new Article.
+    (1) display the HTML form to user (GET)
+    (2) process the form submission and store the new Article object (POST)
+    '''
+ 
+ 
+    form_class = CreateArticleForm
+    template_name = "blog/create_article_form.html"
+class CreateCommentView(CreateView):
+    '''created new comment on new article'''
+    form_class = CreateCommentForm
+    template_name = "blog/create_comment_form.html"
+
+    def get_success_url(self):
+        '''c'''
+        #return reverse('show_all')
+        pk = self.kwargs['pk']
+        return reverse('article', kwargs={'pk':pk})
+    def get_context_data(self):
+        context = super().get_context_data()
+        pk = self.kwargs['pk']
+        article = Article.objects.get(pk=pk)
+        context['article'] = article
+        return context
+
+
+    def form_valid(self,form):
+        print(form.cleaned_data)
+        pk = self.kwargs['pk']
+        article = Article.objects.get(pk=pk)
+        form.instance.article = article
+
+        return super().form_valid(form)
+    

@@ -6,10 +6,12 @@
 # the built-in administrative dashboard.
 
 from django.contrib import admin
-from .models import Profile
+from .models import Profile, Post, Photo
 # Register your models here.
 """
 Registers the Profile model so it can be managed through
 the Django administrative interface.
 """
 admin.site.register(Profile)
+admin.site.register(Post)
+admin.site.register(Photo)

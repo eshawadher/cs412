@@ -6,14 +6,31 @@
 <!-- {{articles}} -->
 <main class="grid-container">
     <article>
+        <img src=" {{article.image_url}}" alt="cat pics">
         <div>
             <h2> {{article.title}}</h2>
-            <h3>by {{article.author}}</h3>
+            <h3>by {{article.author}} at {{article.published}}</h3>
             <p>
                 {{article.text}}
             </p>
         </div>
-        <img src=" {{article.image_url}}" alt="cat pics">
-    </article>
+    
+        </article>
+        <!---add comments-->
+        <!-- {{article.get_all_comments}} -->
+         <div>
+         <h2> Comment </h2>
+         <a href="{%url 'create_comment' article.pk %}">Create a Comment</a>
+         {% for comment in article.get_all_comments%}
+         <div>
+            <strong> by {{comment.author}} at {{comment.published}}</strong>
+            <p>
+                {{comment.text}}
+            </p>
+         </div>
+         {%endfor %}
+         </div>
+    
+
 </main>
 {%endblock%}

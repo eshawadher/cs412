@@ -1,0 +1,28 @@
+<!--
+File: show_post.html
+Author: Esha Wadher (eshaaw@bu.edu), 02/13/2026
+Description:
+Template that displays a single post and all its associated photos.
+-->
+
+{% extends 'mini_insta/base.html' %}
+{%block content%}
+<div class="content-container">
+    <h2> Post by <a href="{% url 'show_profile' post.profile.pk%}">@{{post.profile.username}}</a></h2>
+    <p>{{post.caption}}</p>
+    <p style="color: grey; font-size: 0.85em;">{{post.timestamp}}</p>
+
+    <h3>Photos</h3>
+    {% for photo in post.get_all_photos %}
+    <div styles="margin:10px 0;">
+        <img src="{{photo.image_url}}" alt="photo" style="width: 100%; max-width: 600px; border-radius: 8px;">
+    </div>
+    {%empty%}
+    <img src="https://via.placeholder.com/500x300?text=No+Image" alt="no image" style="width: 100%; max-width: 600px; border-radius: 8px;">
+    {% endfor %}
+
+    <br>
+    <a href="{%url 'show_profile' post.profile.pk %}">Back to Profile</a>
+
+</div>
+{% endblock %}
