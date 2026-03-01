@@ -15,10 +15,9 @@ Template that displays a single post and all its associated photos.
     <h3>Photos</h3>
     {% for photo in post.get_all_photos %}
     <div styles="margin:10px 0;">
-        <img src="{{photo.image_url}}" alt="photo" style="width: 100%; max-width: 600px; border-radius: 8px;">
+        <img src="{{ photo.get_image_url }}" alt="photo" style="width: 100%; max-width: 600px; border-radius: 8px;">
     </div>
     {%empty%}
-    <img src="https://via.placeholder.com/500x300?text=No+Image" alt="no image" style="width: 100%; max-width: 600px; border-radius: 8px;">
     {% endfor %}
 
     <br>

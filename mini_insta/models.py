@@ -24,6 +24,9 @@ class Profile(models.Model):
     def get_all_posts(self):
         '''return a qset of all posts creted by this prof ordered by timessta,p'''
         return Post.objects.filter(profile=self).order_by('timestamp')
+    def get_absolute_url(self):
+        '''retyrn url to display this prof'''
+        return reverse('show_profile', kwargs={'pk': self.pk})
     
 class Post(models.Model):
     '''encap data of an insta post'''
@@ -46,11 +49,19 @@ class Photo(models.Model):
     '''encap the dat of a phot associuate with a post'''
     post = models.ForeignKey(Post, on_delete=models.CASCADE)
     image_url = models.URLField(blank=True)
+    image_file = models.ImageField(blank=True)
     timestamp = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
         '''return a string rep of thsi photo'''
-        return f'Photo for post {self.post.pk} at {self.timestamp}'
+        if self.image_file:
+            return f'Photo (image_file) for post {self.post.pk} at {self.timestamp}'
+        return f'Photo (image_url) for post {self.post.pk} at {self.timestamp}'
+    def get_image_url(self):
+        '''return the URL to the image, whether file or URL'''
+        if self.image_file:
+            return self.image_file.url
+        return self.image_url
 
 
 

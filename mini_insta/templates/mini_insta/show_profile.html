@@ -25,6 +25,10 @@ display name, username, profile image, biography text, and join date.
 
         <h3>Member Since</h3>
         <p>{{ profile.join_date }}</p>
+
+        <a href="{% url 'update_profile' profile.pk %}">
+            <button>Update Profile</button>
+        </a>
     </div>
     <h3> Posts </h3>
     {% for post in profile.get_all_posts %}

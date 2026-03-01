@@ -1,7 +1,7 @@
 from django.shortcuts import render
-from django.views.generic import ListView, DetailView, CreateView
-from .models import Article
-from .forms import CreateArticleForm,CreateCommentForm
+from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
+from .models import Article, Comment
+from .forms import CreateArticleForm,CreateCommentForm, UpdateArticleForm
 import random
 from django.urls import reverse
 # Create your views here.
@@ -56,6 +56,11 @@ class CreateCommentView(CreateView):
         article = Article.objects.get(pk=pk)
         context['article'] = article
         return context
+    def form_valid(self):
+        print(f'CreateArticleView.form_valid(): {form.cleaned_data}')
+
+        return super().form_valid(form)
+    
 
 
     def form_valid(self,form):
@@ -65,4 +70,17 @@ class CreateCommentView(CreateView):
         form.instance.article = article
 
         return super().form_valid(form)
-    
+class UpdateArticleView (UpdateView):
+    model = Article
+    form_class = UpdateArticleForm
+    template_name = "blog/update_article_form.html"
+
+class DeleteCommentView(DeleteView):
+    model = Comment
+    template_name = "blog/delete_comment_form.html"
+
+    def get_success_url(self):
+        pk = self.kwargs['pk']
+        comment = Comment.objects.get(pk=pk)
+        article = comment.article
+        return reverse('article', kwargs={'pk': article.pk})

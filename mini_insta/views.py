@@ -8,9 +8,9 @@
 # to display information for a single profile.
 
 from django.shortcuts import render
-from django.views.generic import ListView, DetailView, CreateView
+from django.views.generic import ListView, DetailView, CreateView, UpdateView
 from .models import Profile,Post, Photo
-from .forms import CreatePostForm
+from .forms import CreatePostForm, UpdateProfileForm
 from django.urls import reverse
 
 # Create your views here.
@@ -52,7 +52,16 @@ class CreatePostView(CreateView):
         profile = Profile.objects.get(pk=pk)
         form.instance.profile = profile
         saved_form = super().form_valid(form)
-        image_url = form.cleaned_data.get('image_url')
-        if image_url:
-            Photo.objects.create(post=self.object, image_url=image_url)
+        files = self.request.FILES.getlist('files')
+        for f in files:
+            Photo.objects.create(post=self.object, image_file=f)
         return saved_form
+        # image_url = form.cleaned_data.get('image_url')
+        # if image_url:
+        #     Photo.objects.create(post=self.object, image_url=image_url)
+        # return saved_form
+class UpdateProfileView(UpdateView):
+    '''handle updating an exisiting profike'''
+    model = Profile
+    form_class = UpdateProfileForm
+    template_name = 'mini_insta/update_profile_form.html'
