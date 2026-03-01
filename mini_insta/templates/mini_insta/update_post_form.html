@@ -1,0 +1,21 @@
+<!--
+File: update_post_form.html
+Author: Esha Wadher (eshaaw@bu.edu), 02/20/2026
+Description:
+Template that updates a Post.
+-->
+
+{% extends 'mini_insta/base.html' %}
+{% block content %}
+<div class="content-container">
+    <h2>Update Post by @{{ object.profile.username }}</h2>
+    <form method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Save Changes</button>
+        <a href="{% url 'show_post' object.pk %}">
+            <button type="button">Cancel</button>
+        </a>
+    </form>
+</div>
+{% endblock %}

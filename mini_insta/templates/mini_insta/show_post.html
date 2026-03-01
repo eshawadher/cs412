@@ -12,6 +12,10 @@ Template that displays a single post and all its associated photos.
     <p>{{post.caption}}</p>
     <p style="color: grey; font-size: 0.85em;">{{post.timestamp}}</p>
 
+    <a href="{% url 'update_post' post.pk %}">Update</a>
+    <a href="{% url 'delete_post' post.pk %}">Delete</a>
+
+
     <h3>Photos</h3>
     {% for photo in post.get_all_photos %}
     <div styles="margin:10px 0;">

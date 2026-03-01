@@ -37,11 +37,11 @@ display name, username, profile image, biography text, and join date.
         <!-- Show first photo, or placeholder if none -->
         {% with photos=post.get_all_photos %}
         {% if photos %}
-        <img src="{{ photos.first.image_url }}" alt="post image"
-            style="width: 100%; max-width: 500px; border-radius: 8px;">
+        <img src="{{ photos.first.get_image_url }}" alt="post image"
+        style="width: 100%; max-width: 500px; border-radius: 8px;">
         {% else %}
-        <img src="https://via.placeholder.com/500x300?text=No+Image" alt="no image"
-            style="width: 100%; max-width: 500px; border-radius: 8px;">
+         <img src="{{ photos.first.get_image_url }}" alt="post image"
+         style="width: 100%; max-width: 500px; border-radius: 8px;">
         {% endif %}
         {% endwith %}
 

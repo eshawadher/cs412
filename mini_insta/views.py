@@ -8,9 +8,9 @@
 # to display information for a single profile.
 
 from django.shortcuts import render
-from django.views.generic import ListView, DetailView, CreateView, UpdateView
+from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
 from .models import Profile,Post, Photo
-from .forms import CreatePostForm, UpdateProfileForm
+from .forms import CreatePostForm, UpdateProfileForm, UpdatePostForm
 from django.urls import reverse
 
 # Create your views here.
@@ -65,3 +65,27 @@ class UpdateProfileView(UpdateView):
     model = Profile
     form_class = UpdateProfileForm
     template_name = 'mini_insta/update_profile_form.html'
+class DeletePostView (DeleteView):
+    '''handle post deletiobn'''
+    model = Post
+    template_name ='mini_insta/delete_post_form.html'
+
+    def get_context_data(self, **kwargs):
+        '''add post and profile to connect'''
+        context = super().get_context_data(**kwargs)
+        context['post'] = self.get_object()
+        context['profile'] = self.get_object().profile
+        return context
+    
+    def get_success_url(self):
+        '''redirect to main prof page'''
+        return reverse('show_profile', kwargs={'pk': self.object.profile.pk})
+class UpdatePostView(UpdateView):
+    '''handle updating a post'''
+    model = Post
+    form_class = UpdatePostForm
+    template_name = 'mini_insta/update_post_form.html'
+    
+    def get_success_url(self):
+        '''Redirect to the post page after update.'''
+        return reverse('show_post', kwargs={'pk': self.object.pk})

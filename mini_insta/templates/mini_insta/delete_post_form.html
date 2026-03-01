@@ -1,0 +1,27 @@
+<!--
+File: delete_post_form.html
+Author: Esha Wadher (eshaaw@bu.edu), 02/20/2026
+Description:
+Template that deletes a Post.
+-->
+
+{% extends 'mini_insta/base.html' %}
+{% block content %}
+<div class="content-container">
+    <h2>Delete Post by @{{ profile.username }}</h2>
+    <p>{{ post.caption }}</p>
+
+    {% for photo in post.get_all_photos %}
+    <img src="{{ photo.get_image_url }}" alt="photo" style="width: 100%; max-width: 500px;">
+    {% endfor %}
+
+    <form method="POST">
+        {% csrf_token %}
+        <button type="submit">Delete</button>
+    </form>
+
+    <a href="{% url 'show_profile' profile.pk %}">
+        <button type="button">Cancel</button>
+    </a>
+</div>
+{% endblock %}
