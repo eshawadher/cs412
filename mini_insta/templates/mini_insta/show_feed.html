@@ -1,0 +1,46 @@
+<!--
+File: show_feed.html
+Author: Esha Wadher (eshaaw@bu.edu), 02/13/2026
+Description:
+Template that dispalyus the profiles current feed.
+-->
+
+{% extends 'mini_insta/base.html' %}
+{% block content %}
+<div class="content-container">
+    <h2>Feed for @{{ profile.username }}</h2>
+
+    {% for post in posts %}
+    <div style="border: 1px solid #ccc; border-radius: 10px; padding: 15px; margin: 15px 0;">
+        <a href="{% url 'show_profile' post.profile.pk %}">
+            <img src="{{ post.profile.profile_image_url }}" alt="{{ post.profile.username }}"
+                style="width: 40px; height: 40px; border-radius: 50%; object-fit: cover;">
+            <strong>@{{ post.profile.username }}</strong>
+        </a>
+
+        {% with photos=post.get_all_photos %}
+        {% if photos %}
+        <img src="{{ photos.first.get_image_url }}" alt="post image"
+            style="width: 100%; max-width: 500px; border-radius: 8px; margin-top: 10px;">
+        {% endif %}
+        {% endwith %}
+
+        <p>{{ post.caption }}</p>
+        <p style="color: grey; font-size: 0.85em;">{{ post.timestamp }}</p>
+        <p>{{ post.get_likes.count }} Likes</p>
+
+        {% for comment in post.get_all_comments %}
+        <div>
+            <strong>@{{ comment.profile.username }}</strong>: {{ comment.text }}
+        </div>
+        {% endfor %}
+
+        <a href="{% url 'show_post' post.pk %}">View Post</a>
+    </div>
+    {% empty %}
+    <p>No posts in your feed yet. Follow some profiles!</p>
+    {% endfor %}
+
+    <a href="{% url 'show_profile' profile.pk %}">Back to Profile</a>
+</div>
+{% endblock %}

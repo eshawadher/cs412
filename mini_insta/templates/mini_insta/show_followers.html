@@ -1,0 +1,21 @@
+<!--
+File: show_followers.html
+Author: Esha Wadher (eshaaw@bu.edu), 02/13/2026
+Description:
+Template that displays the users current followers.
+-->
+
+{% extends 'mini_insta/base.html' %}
+{% block content %}
+<div class="content-container">
+    <h2>Followers of @{{ profile.username }}</h2>
+    {% for follower in profile.get_followers %}
+    <div>
+        <a href="{% url 'show_profile' follower.pk %}">{{ follower.display_name }} @{{ follower.username }}</a>
+    </div>
+    {% empty %}
+    <p>No followers yet.</p>
+    {% endfor %}
+    <a href="{% url 'show_profile' profile.pk %}">Back to Profile</a>
+</div>
+{% endblock %}

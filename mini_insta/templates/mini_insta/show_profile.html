@@ -26,6 +26,13 @@ display name, username, profile image, biography text, and join date.
         <h3>Member Since</h3>
         <p>{{ profile.join_date }}</p>
 
+        <p>
+            <a href="{% url 'show_followers' profile.pk %}">{{ profile.get_num_followers }} Followers</a> |
+            <a href="{% url 'show_following' profile.pk %}">{{ profile.get_num_following }} Following</a>
+        </p>
+        <a href="{% url 'show_feed' profile.pk %}">View Feed</a>
+        <a href="{% url 'search' profile.pk %}">Search</a>
+
         <a href="{% url 'update_profile' profile.pk %}">
             <button>Update Profile</button>
         </a>

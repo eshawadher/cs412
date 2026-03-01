@@ -1,0 +1,44 @@
+<!--
+File: search_results. html
+Author: Esha Wadher (eshaaw@bu.edu), 02/13/2026
+Description:
+Template that displays search results for profiles and posts
+-->
+
+{% extends 'mini_insta/base.html' %}
+{% block content %}
+<div class="content-container">
+    <h2>Search Results for "{{ query }}"</h2>
+
+    <h3>Profiles</h3>
+    {% for p in profiles %}
+    <div>
+        <a href="{% url 'show_profile' p.pk %}">{{ p.display_name }} @{{ p.username }}</a>
+        <p>{{ p.bio_text }}</p>
+    </div>
+    {% empty %}
+    <p>No profiles found.</p>
+    {% endfor %}
+
+    <h3>Posts</h3>
+    {% for post in posts %}
+    <div style="border: 1px solid #ccc; border-radius: 10px; padding: 15px; margin: 15px 0;">
+        <a href="{% url 'show_profile' post.profile.pk %}"><strong>@{{ post.profile.username }}</strong></a>
+        <p>{{ post.caption }}</p>
+        {% with photos=post.get_all_photos %}
+        {% if photos %}
+        <img src="{{ photos.first.get_image_url }}" alt="post image"
+            style="width: 100%; max-width: 500px; border-radius: 8px;">
+        {% endif %}
+        {% endwith %}
+        <a href="{% url 'show_post' post.pk %}">View Post</a>
+    </div>
+    {% empty %}
+    <p>No posts found.</p>
+    {% endfor %}
+
+    <a href="{% url 'search' profile.pk %}">Search Again</a>
+    |
+    <a href="{% url 'show_profile' profile.pk %}">Back to Profile</a>
+</div>
+{% endblock %}

@@ -1,0 +1,21 @@
+<!--
+File: show_following.html
+Author: Esha Wadher (eshaaw@bu.edu), 02/13/2026
+Description:
+Template that displays who the user is currently following
+-->
+
+{% extends 'mini_insta/base.html' %}
+{% block content %}
+<div class="content-container">
+    <h2>@{{ profile.username }} is following</h2>
+    {% for following in profile.get_following %}
+    <div>
+        <a href="{% url 'show_profile' following.pk %}">{{ following.display_name }} @{{ following.username }}</a>
+    </div>
+    {% empty %}
+    <p>Not following anyone yet.</p>
+    {% endfor %}
+    <a href="{% url 'show_profile' profile.pk %}">Back to Profile</a>
+</div>
+{% endblock %}

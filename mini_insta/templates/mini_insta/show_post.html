@@ -24,6 +24,17 @@ Template that displays a single post and all its associated photos.
     {%empty%}
     {% endfor %}
 
+    <p>{{ post.get_likes.count }} Likes</p>
+    <h3>Comments</h3>
+    {% for comment in post.get_all_comments %}
+    <div>
+        <strong>@{{ comment.profile.username }}</strong>: {{ comment.text }}
+        <p style="color: grey; font-size: 0.85em;">{{ comment.timestamp }}</p>
+    </div>
+    {% empty %}
+    <p>No comments yet.</p>
+    {% endfor %}
+
     <br>
     <a href="{%url 'show_profile' post.profile.pk %}">Back to Profile</a>
 
