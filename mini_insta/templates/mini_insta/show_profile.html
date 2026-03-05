@@ -30,12 +30,17 @@ display name, username, profile image, biography text, and join date.
             <a href="{% url 'show_followers' profile.pk %}">{{ profile.get_num_followers }} Followers</a> |
             <a href="{% url 'show_following' profile.pk %}">{{ profile.get_num_following }} Following</a>
         </p>
-        <a href="{% url 'show_feed' profile.pk %}">View Feed</a>
-        <a href="{% url 'search' profile.pk %}">Search</a>
+        {% if user.is_authenticated and user == profile.user %}
+        <!-- Only show these links if viewing your profile -->
+         <a href="{% url 'show_feed' %}">View Feed</a>
+         <a href="{% url 'search' %}">Search</a>
+         {% endif %}
 
-        <a href="{% url 'update_profile' profile.pk %}">
+        {% if user.is_authenticated and user == profile.user %}
+        <a href="{% url 'update_profile' %}">
             <button>Update Profile</button>
         </a>
+        {% endif %}
     </div>
     <h3> Posts </h3>
     {% for post in profile.get_all_posts %}

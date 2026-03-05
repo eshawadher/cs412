@@ -18,6 +18,11 @@ content blocks that other templates extend.
 <body>
     <header>
         <h1> Mini Insta</h1>
+        {% if user.is_authenticated %}
+        <p>Logged in as: {{ user.username }}</p>
+        {% else %}
+        <p>Not logged in</p>
+        {% endif %}
         <nav>
             <a href="{% url 'show_all_profiles' %}">All Profiles</a>
         </nav>
@@ -26,11 +31,20 @@ content blocks that other templates extend.
     {% block content %}
     {% endblock %}
     <footer>
-        <a href="{% url 'show_all_profiles' %}">
-            Back to all profiles
-        </a>
-        {% if profile %}
-            | <a href="{% url 'create_post' profile.pk %}">Create Post</a>
+        <a href="{% url 'show_all_profiles' %}">Back to all profiles</a>
+        {% if user.is_authenticated %}
+        | <a href="{% url 'create_post' %}">Create Post</a>
+        | <a href="{% url 'show_my_profile' %}">My Profile</a>
+        | <a href="{% url 'show_feed' %}">Feed</a>
+        | <a href="{% url 'search' %}">Search</a>
+        <!-- Logout  -->
+        <form method="POST" action="{% url 'logout' %}" style="display: inline;">
+                {% csrf_token %}
+                <button type="submit">Logout</button>
+
+        </form>
+        {% else %}
+            | <a href="{% url 'login' %}">Login</a>
         {% endif %}
     </footer>
 

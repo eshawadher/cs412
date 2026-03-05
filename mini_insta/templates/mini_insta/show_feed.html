@@ -40,7 +40,6 @@ Template that dispalyus the profiles current feed.
     {% empty %}
     <p>No posts in your feed yet. Follow some profiles!</p>
     {% endfor %}
-
     <a href="{% url 'show_profile' profile.pk %}">Back to Profile</a>
 </div>
 {% endblock %}

@@ -11,12 +11,13 @@ Template that displays the form to create a new Post.
 
 <div class="content-container">
     <h2>Create New Post from @{{profile.username}}</h2>
-    <form action="{%url 'create_post' profile.pk %}" method="POST" enctype="multipart/form-data">
+    <form action="{% url 'create_post' %}" method="POST" enctype="multipart/form-data">
+       
         {%csrf_token%}
         {{form.as_p}}
         <input type="file" name="files" multiple>
         <button type="submit">Post</button>
-        <a href="{% url 'show_profile' profile.pk%}">
+        <a href="{% url 'create_post' %}">Create Post</a>
             <button type="button">Cancel</button>
         </a>
         <p> this is to commit </p>
