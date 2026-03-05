@@ -10,6 +10,22 @@ Template that displays a single post and all its associated photos.
 <div class="content-container">
     <h2> Post by <a href="{% url 'show_profile' post.profile.pk%}">@{{post.profile.username}}</a></h2>
     <p>{{post.caption}}</p>
+    <p>
+        <strong>{{ post.get_num_likes }} Likes</strong>
+        {% if user.is_authenticated and user.profile %}
+            {% if post.profile != user.profile %}
+                {% if user.profile in post.get_liking_profiles %}
+                    <a href="{% url 'unlike_post' post.pk %}">
+                        <button>Unlike</button>
+                    </a>
+                {% else %}
+                    <a href="{% url 'like_post' post.pk %}">
+                        <button>Like</button>
+                    </a>
+                {% endif %}
+            {% endif %}
+        {% endif %}
+    </p>
     <p style="color: grey; font-size: 0.85em;">{{post.timestamp}}</p>
 
     <a href="{% url 'update_post' post.pk %}">Update</a>

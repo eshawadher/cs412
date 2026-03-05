@@ -30,13 +30,22 @@ display name, username, profile image, biography text, and join date.
             <a href="{% url 'show_followers' profile.pk %}">{{ profile.get_num_followers }} Followers</a> |
             <a href="{% url 'show_following' profile.pk %}">{{ profile.get_num_following }} Following</a>
         </p>
-        {% if user.is_authenticated and user == profile.user %}
-        <!-- Only show these links if viewing your profile -->
-         <a href="{% url 'show_feed' %}">View Feed</a>
-         <a href="{% url 'search' %}">Search</a>
-         {% endif %}
+        {% if user.is_authenticated and user.profile and user.profile != profile %}
+        {% if user.profile in profile.get_followers %}
+        <a href="{% url 'unfollow_profile' profile.pk %}">
+            <button>Unfollow</button>
+        </a>
+        {% else %}
+        <a href="{% url 'follow_profile' profile.pk %}">
+            <button>Follow</button>
+        </a>
+        {% endif %}
+        {% endif %}
 
-        {% if user.is_authenticated and user == profile.user %}
+        {% if user.is_authenticated and user.profile == profile %}
+        <a href="{% url 'show_feed' %}">View Feed</a> |
+        <a href="{% url 'search' %}">Search</a>
+        <br><br>
         <a href="{% url 'update_profile' %}">
             <button>Update Profile</button>
         </a>
@@ -45,8 +54,6 @@ display name, username, profile image, biography text, and join date.
     <h3> Posts </h3>
     {% for post in profile.get_all_posts %}
     <div style="border: 1px solid #ccc; border-radius: 10px; padding: 15px; margin: 15px 0;">
-
-        <!-- Show first photo, or placeholder if none -->
         {% with photos=post.get_all_photos %}
         {% if photos %}
         <img src="{{ photos.first.get_image_url }}" alt="post image"

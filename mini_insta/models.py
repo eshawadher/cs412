@@ -18,7 +18,9 @@ class Profile(models.Model):
     profile_image_url = models.URLField(blank=True)
     bio_text = models.TextField(blank=True)
     join_date = models.DateField(auto_now_add=True)
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    #user = models.ForeignKey(User, on_delete=models.CASCADE)
+    # i kept getting a multi user error so i did one to one to try and permanetly stop it 
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
 
     # print('hello')
 
@@ -48,6 +50,9 @@ class Profile(models.Model):
         '''return a list of Posts from profiles that this profile follow'''
         following = self.get_following()
         return Post.objects.filter(profile__in=following).order_by('-timestamp')
+    def is_followed_by(self, other_profile):
+        '''check if this profile is followed by another profile'''
+        return Follow.objects.filter(profile=self, follower_profile=other_profile).exists()
 class Post(models.Model):
     '''encap data of an insta post'''
     profile = models.ForeignKey(Profile, on_delete=models.CASCADE)
@@ -70,7 +75,16 @@ class Post(models.Model):
     def get_likes(self):
         '''Return all likes on this Post.'''
         return Like.objects.filter(post=self)
-    
+    def is_liked_by(self, profile):
+        '''check if this post is liked by a profile'''
+        return Like.objects.filter(post=self, profile=profile).exists()
+    def get_num_likes(self):
+        '''Return the number of likes on this post'''
+        return self.get_likes().count()
+    def get_liking_profiles(self):
+        '''list of profiles who liked this post'''
+        return [like.profile for like in self.get_likes()]
+
 class Photo(models.Model):
     '''encap the dat of a phot associuate with a post'''
     post = models.ForeignKey(Post, on_delete=models.CASCADE)

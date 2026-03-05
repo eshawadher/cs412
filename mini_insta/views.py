@@ -7,9 +7,9 @@
 # Includes a list view to display all profiles and a detail view
 # to display information for a single profile.
 
-from django.shortcuts import render
-from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
-from .models import Profile,Post, Photo
+from django.shortcuts import render, redirect
+from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView, TemplateView,View
+from .models import Profile,Post, Photo, Follow, Like
 from .forms import CreatePostForm, UpdateProfileForm, UpdatePostForm, CreateProfileForm
 from django.urls import reverse
 from django.contrib.auth.mixins import LoginRequiredMixin
@@ -28,7 +28,7 @@ class ProfileAuthMixin(LoginRequiredMixin):
     
     def get_profile(self):
         '''return the Profile associated with the logged-in user'''
-        return Profile.objects.get(user=self.request.user)
+        return self.request.user.profile
     
 class ProfileListView(ListView):
     '''Define a class to show all the profiles'''
@@ -197,3 +197,50 @@ class CreateProfileView(CreateView):
     def get_success_url(self):
         '''redirect to the new profile after creation'''
         return reverse('show_my_profile')
+class FollowProfileView(ProfileAuthMixin, View):
+    '''create a follwo relationship between loggied in user and another profile'''
+    def dispatch(self, request, *args, **kwargs):
+        '''handle follow action'''
+        pk = self.kwargs['pk']
+        profile_to_follow = Profile.objects.get(pk=pk)
+
+        my_profile = self.get_profile()
+        if my_profile != profile_to_follow:
+            if not Follow.objects.filter(profile=profile_to_follow, follower_profile = my_profile).exists():
+                Follow.objects.create(profile=profile_to_follow, follower_profile = my_profile)
+        
+        return redirect('show_profile', pk=pk)
+class UnfollowProfileView(ProfileAuthMixin, View):
+    '''delte a follower relationship'''
+    def dispatch(self, request, *args, **kwargs):
+        '''handle unfollow action'''
+        pk = self.kwargs['pk']
+        profile_to_unfollow = Profile.objects.get(pk=pk)
+
+        my_profile = self.get_profile()
+        Follow.objects.filter(profile=profile_to_unfollow, follower_profile = my_profile).delete()
+        
+        return redirect('show_profile', pk=pk)
+class LikePostView(ProfileAuthMixin, View):
+    '''create a like on a post'''
+    def dispatch(self, request, *args, **kwargs):
+        '''handle likig post action'''
+        pk = self.kwargs['pk']
+        post = Post.objects.get(pk=pk)
+
+        my_profile = self.get_profile()
+        if my_profile != post.profile:
+            if not Like.objects.filter(post=post, profile = my_profile).exists():
+                Like.objects.create(post=post, profile = my_profile)
+        
+        return redirect('show_post', pk=pk)
+    
+class UnlikePostView(ProfileAuthMixin, View):
+    '''delete  a like on a post'''
+    def dispatch(self, request, *args, **kwargs):
+        '''handle unlikig post action'''
+        pk = self.kwargs['pk']
+        post = Post.objects.get(pk=pk)
+        my_profile = self.get_profile()
+        Like.objects.filter(post=post, profile = my_profile).delete()
+        return redirect('show_post', pk=pk)
