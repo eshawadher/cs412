@@ -37,7 +37,7 @@ content blocks that other templates extend.
         | <a href="{% url 'show_my_profile' %}">My Profile</a>
         | <a href="{% url 'show_feed' %}">Feed</a>
         | <a href="{% url 'search' %}">Search</a>
-        <!-- Logout  -->
+        |
         <form method="POST" action="{% url 'logout' %}" style="display: inline;">
                 {% csrf_token %}
                 <button type="submit">Logout</button>
@@ -45,6 +45,7 @@ content blocks that other templates extend.
         </form>
         {% else %}
             | <a href="{% url 'login' %}">Login</a>
+            | <a href="{% url 'create_profile' %}">Create Profile</a>
         {% endif %}
     </footer>
 

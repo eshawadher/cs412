@@ -5,7 +5,7 @@
 
 from django.urls import path
 from django.contrib.auth import views as auth_views
-from .views import ProfileListView, ProfileDetailView, PostDetailView, CreatePostView, UpdateProfileView,DeletePostView, UpdatePostView, ShowFollowersDetailView, ShowFollowingDetailView, PostFeedListView, SearchView, ShowMyProfileView
+from .views import ProfileListView, ProfileDetailView, PostDetailView, CreatePostView, UpdateProfileView,DeletePostView, UpdatePostView, ShowFollowersDetailView, ShowFollowingDetailView, PostFeedListView, SearchView, ShowMyProfileView, CreateProfileView
 
 
 
@@ -25,5 +25,5 @@ urlpatterns = [
     path('profile', ShowMyProfileView.as_view(), name='show_my_profile'),
     path('login/', auth_views.LoginView.as_view(template_name='mini_insta/login.html'), name='login'),
     path('logout/', auth_views.LogoutView.as_view(next_page='show_all_profiles'), name='logout'),
-    
+    path('create_profile/', CreateProfileView.as_view(), name='create_profile'),
 ]

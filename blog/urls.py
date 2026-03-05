@@ -1,5 +1,5 @@
 from django.urls import path
-from .views import * #ShowAllViews, ArticleView, RandomArticleView
+from .views import  ShowAllViews, ArticleView, RandomArticleView, CreateArticleView, CreateCommentView, UpdateArticleView,DeleteCommentView, UserRegistrationView
 from django.contrib.auth import views as auth_views
 urlpatterns = [
     path('', RandomArticleView.as_view(), name="random"),

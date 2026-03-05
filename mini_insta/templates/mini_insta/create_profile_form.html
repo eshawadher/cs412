@@ -1,0 +1,25 @@
+<!--
+File: create_profile_form.html
+Author: Esha Wadher (eshaaw@bu.edu)
+Description: Form to create a new User and Profile together
+-->
+{% extends 'mini_insta/base.html' %}
+{% block content %}
+
+<div class="content-container">
+    <h2>Create Your Profile</h2>
+    
+    <form method="POST" action="{% url 'create_profile' %}">
+        {% csrf_token %}
+        
+        <h3>User Account</h3>
+        {{ user_form }}
+        
+        <h3>Profile Information</h3>
+        {{ form}}
+        
+        <button type="submit">Create Profile</button>
+    </form>
+</div>
+
+{% endblock %}

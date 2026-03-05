@@ -8,11 +8,14 @@
 # to display information for a single profile.
 
 from django.shortcuts import render
-from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView, TemplateView
+from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
 from .models import Profile,Post, Photo
-from .forms import CreatePostForm, UpdateProfileForm, UpdatePostForm
+from .forms import CreatePostForm, UpdateProfileForm, UpdatePostForm, CreateProfileForm
 from django.urls import reverse
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth import login
+
 
 # Create your views here.
 
@@ -171,3 +174,26 @@ class SearchView(ProfileAuthMixin, ListView):
         context['posts'] = self.get_queryset()
         context['profiles'] = Profile.objects.filter(username__icontains=query) | Profile.objects.filter(display_name__icontains=query) | Profile.objects.filter(bio_text__icontains=query)
         return context
+class CreateProfileView(CreateView):
+    '''create new prof and user'''
+    form_class = CreateProfileForm
+    template_name = 'mini_insta/create_profile_form.html'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        if 'user_form' not in context:
+            context['user_form'] = UserCreationForm()
+        return context
+    def form_valid(self,form):
+        '''proccesses the user and profile form'''
+        user_form = UserCreationForm(self.request.POST)
+        if user_form.is_valid():
+            user = user_form.save()
+            login(self.request, user, backend='django.contrib.auth.backends.ModelBackend')
+            form.instance.user = user
+            return super().form_valid(form)
+        else:
+            return self.form_invalid(form)
+    def get_success_url(self):
+        '''redirect to the new profile after creation'''
+        return reverse('show_my_profile')

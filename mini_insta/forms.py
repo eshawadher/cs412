@@ -25,6 +25,13 @@ class UpdatePostForm(forms.ModelForm):
         model = Post
         fields = ['caption']
 
+class CreateProfileForm(forms.ModelForm):
+    '''form to create a new prof'''
+    
+    class Meta:
+        model = Profile
+        fields = ['username', 'display_name', 'bio_text', 'profile_image_url']
+
 
 #  username = models.TextField(blank=True)
 #     display_name = models.TextField(blank=True)
