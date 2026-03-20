@@ -17,9 +17,7 @@ this is the template that displays teh graphs for the.
         <select name="party_affiliation">
             <option value="">All</option>
             {% for p in party_choices %}
-            <option value="{{ p.0 }}" {% if p.0==selected_party_affiliation %}selected{% endif %}>
-                {{ p.0 }}
-            </option>
+            <option value="{{ p.0 }}" {% if p.0 == selected_party %}selected{% endif %}>{{ p.0 }}</option>
             {% endfor %}
         </select>
     </p>
@@ -29,9 +27,7 @@ this is the template that displays teh graphs for the.
         <select name="min_dob">
             <option value="">All</option>
             {% for y in year_choices %}
-            <option value="{{ y.0 }}" {% if y.0|stringformat:"s"==selected_min_dob %}selected{% endif %}>
-                {{ y.0 }}
-            </option>
+            <option value="{{ y.0 }}" {% if y.0|stringformat:"s" == selected_min_dob %}selected{% endif %}>{{ y.0 }}</option>
             {% endfor %}
         </select>
     </p>
@@ -41,9 +37,7 @@ this is the template that displays teh graphs for the.
         <select name="max_dob">
             <option value="">All</option>
             {% for y in year_choices %}
-            <option value="{{ y.0 }}" {% if y.0|stringformat:"s"==selected_max_dob %}selected{% endif %}>
-                {{ y.0 }}
-            </option>
+            <option value="{{ y.0 }}" {% if y.0|stringformat:"s" == selected_max_dob %}selected{% endif %}>{{ y.0 }}</option>
             {% endfor %}
         </select>
     </p>
@@ -53,9 +47,7 @@ this is the template that displays teh graphs for the.
         <select name="voter_score">
             <option value="">All</option>
             {% for s in score_choices %}
-            <option value="{{ s.0 }}" {% if s.0|stringformat:"s"==selected_voter_score %}selected{% endif %}>
-                {{ s.0 }}
-            </option>
+            <option value="{{ s.0 }}" {% if s.0|stringformat:"s" == selected_voter_score %}selected{% endif %}>{{ s.0 }}</option>
             {% endfor %}
         </select>
     </p>
