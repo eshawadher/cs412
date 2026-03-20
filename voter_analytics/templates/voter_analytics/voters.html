@@ -1,0 +1,122 @@
+<!--
+File: graphs.html
+Author: Esha Wadher (eshaaw@bu.edu), 03/20/2026
+Description:
+this is the template that displays the dropdown and boxes as well as voter infor.
+-->
+{% extends 'voter_analytics/base.html' %}
+
+{% block content %}
+
+<h2>Voter List</h2>
+
+<form method="GET">
+    <p>
+        Party Affiliation:
+        <select name="party_affiliation">
+            <option value="">All</option>
+            {% for p in party_choices %}
+            <option value="{{ p.0 }}" {% if p.0==selected_party_affiliation %}selected{% endif %}>
+                {{ p.0 }}
+            </option>
+            {% endfor %}
+        </select>
+    </p>
+
+    <p>
+        Min Birth Year:
+        <select name="min_dob">
+            <option value="">All</option>
+            {% for y in year_choices %}
+            <option value="{{ y.0 }}" {% if y.0|stringformat:"s"==selected_min_dob %}selected{% endif %}>
+                {{ y.0 }}
+            </option>
+            {% endfor %}
+        </select>
+    </p>
+
+    <p>
+        Max Birth Year:
+        <select name="max_dob">
+            <option value="">All</option>
+            {% for y in year_choices %}
+            <option value="{{ y.0 }}" {% if y.0|stringformat:"s"==selected_max_dob %}selected{% endif %}>
+                {{ y.0 }}
+            </option>
+            {% endfor %}
+        </select>
+    </p>
+
+    <p>
+        Voter Score:
+        <select name="voter_score">
+            <option value="">All</option>
+            {% for s in score_choices %}
+            <option value="{{ s.0 }}" {% if s.0|stringformat:"s"==selected_voter_score %}selected{% endif %}>
+                {{ s.0 }}
+            </option>
+            {% endfor %}
+        </select>
+    </p>
+
+    <p>
+        <input type="checkbox" name="v20state" {% if checked_v20state %}checked{% endif %}>
+        v20state
+
+        <input type="checkbox" name="v21town" {% if checked_v21town %}checked{% endif %}>
+        v21town
+
+        <input type="checkbox" name="v21primary" {% if checked_v21primary %}checked{% endif %}>
+        v21primary
+
+        <input type="checkbox" name="v22general" {% if checked_v22general %}checked{% endif %}>
+        v22general
+
+        <input type="checkbox" name="v23town" {% if checked_v23town %}checked{% endif %}>
+        v23town
+    </p>
+
+    <p>
+        <input type="submit" value="Filter">
+    </p>
+</form>
+
+<table border="1">
+    <tr>
+        <th>Name</th>
+        <th>Street Address</th>
+        <th>Date of Birth</th>
+        <th>Party Affiliation</th>
+        <th>Voter Score</th>
+    </tr>
+
+    {% for v in voters %}
+    <tr>
+        <td>
+            <a href="{% url 'voter' v.pk %}">
+                {{ v.first_name }} {{ v.last_name }}
+            </a>
+        </td>
+        <td>{{ v.street_number }} {{ v.street_name }}</td>
+        <td>{{ v.date_of_birth }}</td>
+        <td>{{ v.party_affiliation }}</td>
+        <td>{{ v.voter_score }}</td>
+    </tr>
+    {% endfor %}
+</table>
+
+<p>
+    {% if is_paginated %}
+    {% if page_obj.has_previous %}
+    <a href="?page={{ page_obj.previous_page_number }}">Previous</a>
+    {% endif %}
+
+    Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}
+
+    {% if page_obj.has_next %}
+    <a href="?page={{ page_obj.next_page_number }}">Next</a>
+    {% endif %}
+    {% endif %}
+</p>
+
+{% endblock %}

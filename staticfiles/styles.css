@@ -69,9 +69,20 @@ header {
 
 header h1 {
     margin: 0;
-    font-size: calc(2rem + 1.5vw);
-    letter-spacing: 0.15em; /* ADD THIS for header specifically */
-    text-transform: uppercase; /* ADD THIS */
+    font-size: 1.5rem;
+    letter-spacing: 0.15em; 
+    text-transform: uppercase;
+}
+header nav ul{
+    display: flex;
+    gap: 20px;
+    list-style: none;
+    padding: 0;
+    margin: 5px 0 0 0;
+}
+
+header nav ul li a {
+    font-size: 0.95rem;
 }
 
 footer {

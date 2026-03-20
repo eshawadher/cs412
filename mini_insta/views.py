@@ -194,7 +194,8 @@ class CreateProfileView(CreateView):
             return super().form_valid(form)
         else:
             context = self.get_context_data(form=form)
-            context['user_form'] = user_form  # Pass the invalid form with errors
+            context['user_form'] = user_form 
+
             return self.render_to_response(context)
     def get_success_url(self):
         '''redirect to the new profile after creation'''
