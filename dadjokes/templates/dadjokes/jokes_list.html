@@ -1,0 +1,14 @@
+<!--
+File: jokes_list.html
+Author: Esha Wadher (eshaaw@bu.edu), 4/3/2026
+Description: Template to display all jokes.
+-->
+
+{% extends 'dadjokes/base.html' %}
+
+{% block content %}
+  <h2>All Dad Jokes</h2>
+  {% for joke in jokes %}
+    <p><strong>{{ joke.text }}</strong> — {{ joke.name }}</p>
+  {% endfor %}
+{% endblock %}

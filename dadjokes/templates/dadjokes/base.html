@@ -1,0 +1,37 @@
+<!--
+File: base.html
+Author: Esha Wadher (eshaaw@bu.edu), 4/3/2026
+Description:
+Base template for the Dad Jokes app.
+-->
+
+{% load static %}
+<html>
+
+<head>
+    <title>Dad Jokes</title>
+    <link rel="stylesheet" href="{% static 'styles-blog.css' %}?v=1">
+</head>
+
+<body>
+    <header>
+        <h1>Dad Jokes</h1>
+        <nav>
+            <a href="{% url 'random_joke' %}">Random</a> |
+            <a href="{% url 'jokes_list' %}">All Jokes</a> |
+            <a href="{% url 'pictures_list' %}">All Pictures</a>
+        </nav>
+    </header>
+
+    {% block content %}
+    {% endblock %}
+
+    <footer>
+        <a href="{% url 'random_joke' %}">Home</a> |
+        <a href="{% url 'jokes_list' %}">All Jokes</a> |
+        <a href="{% url 'pictures_list' %}">All Pictures</a>
+    </footer>
+
+</body>
+
+</html>

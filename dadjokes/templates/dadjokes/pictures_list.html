@@ -1,0 +1,15 @@
+<!--
+File: pictures_list.html
+Author: Esha Wadher (eshaaw@bu.edu), 4/3/2026
+Description: Template to display all pictures.
+-->
+
+{% extends 'dadjokes/base.html' %}
+
+{% block content %}
+  <h2>All Pictures</h2>
+  {% for picture in pictures %}
+    <img src="{{ picture.image_url }}" width="400">
+    <p>— {{ picture.name }}</p>
+  {% endfor %}
+{% endblock %}

@@ -1,0 +1,14 @@
+<!--
+File: joke_detail.html
+Author: Esha Wadher (eshaaw@bu.edu), 4/3/2026
+Description: Template to display one joke.
+-->
+
+{% extends 'dadjokes/base.html' %}
+
+{% block content %}
+  <h2>Dad Joke</h2>
+  <p><strong>{{ joke.text }}</strong></p>
+  <p>— {{ joke.name }}</p>
+  <a href="{% url 'jokes_list' %}">Back to all jokes</a>
+{% endblock %}
