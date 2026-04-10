@@ -15,6 +15,15 @@ from django.urls import reverse
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth import login
+from rest_framework import generics
+from rest_framework.views import APIView
+from rest_framework.response import Response
+from rest_framework.permissions import AllowAny, IsAuthenticated
+from rest_framework.authentication import TokenAuthentication
+from rest_framework.authtoken.models import Token
+from django.contrib.auth import authenticate, login
+from .serializers import ProfileSerializer, PostSerializer
+
 
 
 # Create your views here.
@@ -247,3 +256,72 @@ class UnlikePostView(ProfileAuthMixin, View):
         my_profile = self.get_profile()
         Like.objects.filter(post=post, profile = my_profile).delete()
         return redirect('show_post', pk=pk)
+    
+# API view to handle login 
+class LoginAPIView(APIView):
+    '''API View to handle login by credentials, return an AuthToken.'''
+    # open up this view to allow unauthenticated users
+    authentication_classes = []
+    permission_classes = [AllowAny]
+
+    def post(self, request):
+        '''authenticate user and return token and profile data.'''
+        user = authenticate(
+            request,
+            username=request.data.get('username'),
+            password=request.data.get('password')
+        )
+        print(f"LoginAPIView.post(): user={user}")
+        if user:
+            login(request, user)
+            token, created = Token.objects.get_or_create(user=user)
+            profile = Profile.objects.get(user=user)
+            return Response({
+                'token': token.key,
+                'user_id': user.id,
+                'username': user.username,
+                'profile_id': profile.id,
+            })
+        return Response({'error': 'Invalid credentials'}, status=400)
+
+# API view to list all profiles
+class ProfileListAPIView(generics.ListAPIView):
+    '''an API view to return a listing of Profiles.'''
+    queryset = Profile.objects.all()
+    serializer_class = ProfileSerializer
+
+# API view to retrieve one profile
+class ProfileDetailAPIView(generics.RetrieveAPIView):
+    '''an API view to return a single Profile.'''
+    queryset = Profile.objects.all()
+    serializer_class = ProfileSerializer
+
+# API view to list posts for one profile
+class ProfilePostsAPIView(generics.ListAPIView):
+    '''an API view to return all posts for a given profile.'''
+    serializer_class = PostSerializer
+
+    def get_queryset(self):
+        '''return posts for the profile specified by pk.'''
+        profile = Profile.objects.get(pk=self.kwargs['pk'])
+        return profile.get_all_posts()
+
+# API view to return the feed for one profile
+class ProfileFeedAPIView(generics.ListAPIView):
+    '''an API view to return the feed for a given profile.'''
+    serializer_class = PostSerializer
+
+    def get_queryset(self):
+        '''return feed posts for the profile specified by pk.'''
+        profile = Profile.objects.get(pk=self.kwargs['pk'])
+        return profile.get_post_feed()
+
+# API view to create a new post
+class CreatePostAPIView(generics.CreateAPIView):
+    '''an API view to create a new Post.'''
+    serializer_class = PostSerializer
+
+    def perform_create(self, serializer):
+        '''set the profile when creating a post.'''
+        profile = Profile.objects.get(user=self.request.user)
+        serializer.save(profile=profile)

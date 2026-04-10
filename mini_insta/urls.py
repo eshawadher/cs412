@@ -6,6 +6,7 @@
 from django.urls import path
 from django.contrib.auth import views as auth_views
 from .views import ProfileListView, ProfileDetailView, PostDetailView, CreatePostView, UpdateProfileView,DeletePostView, UpdatePostView, ShowFollowersDetailView, ShowFollowingDetailView, PostFeedListView, SearchView, ShowMyProfileView, CreateProfileView, FollowProfileView, UnfollowProfileView, LikePostView, UnlikePostView
+from .views import LoginAPIView, ProfileListAPIView, ProfileDetailAPIView, ProfilePostsAPIView, ProfileFeedAPIView, CreatePostAPIView
 
 
 
@@ -30,4 +31,12 @@ urlpatterns = [
     path('profile/<int:pk>/delete_follow', UnfollowProfileView.as_view(), name='unfollow_profile'),
     path('post/<int:pk>/like', LikePostView.as_view(), name='like_post'),
     path('post/<int:pk>/delete_like', UnlikePostView.as_view(), name='unlike_post'),
+
+      # API endpoints
+    path('api/login/', LoginAPIView.as_view(), name='api_login'),
+    path('api/profiles/', ProfileListAPIView.as_view(), name='api_profiles'),
+    path('api/profile/<int:pk>/', ProfileDetailAPIView.as_view(), name='api_profile'),
+    path('api/profile/<int:pk>/posts/', ProfilePostsAPIView.as_view(), name='api_profile_posts'),
+    path('api/profile/<int:pk>/feed/', ProfileFeedAPIView.as_view(), name='api_profile_feed'),
+    path('api/create_post/', CreatePostAPIView.as_view(), name='api_create_post'),
 ]
