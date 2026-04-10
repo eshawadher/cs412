@@ -16,18 +16,23 @@ class PhotoSerializer(serializers.ModelSerializer):
 
     def get_image(self, obj):
         '''return the best available image URL.'''
-        return obj.get_image_url()
+        request = self.context.get('request')
+        url = obj.get_image_url()
+        if url and request:
+            return request.build_absolute_uri(url)
+        return url
 
 class PostSerializer(serializers.ModelSerializer):
-    '''serializer to convert Post objects to/from JSON, including photos.'''
     photos = PhotoSerializer(many=True, read_only=True, source='get_all_photos')
     profile_username = serializers.SerializerMethodField()
     profile_image = serializers.SerializerMethodField()
+    profile = serializers.PrimaryKeyRelatedField(read_only=True)
 
     class Meta:
         model = Post
         fields = ['id', 'profile', 'profile_username', 'profile_image',
                   'caption', 'timestamp', 'photos']
+        # no image_url here!
 
     def get_profile_username(self, obj):
         '''return the username of the post profile.'''

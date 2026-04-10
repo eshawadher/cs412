@@ -320,8 +320,12 @@ class ProfileFeedAPIView(generics.ListAPIView):
 class CreatePostAPIView(generics.CreateAPIView):
     '''an API view to create a new Post.'''
     serializer_class = PostSerializer
+    authentication_classes = [TokenAuthentication]
+    permission_classes = [IsAuthenticated]
 
     def perform_create(self, serializer):
-        '''set the profile when creating a post.'''
         profile = Profile.objects.get(user=self.request.user)
-        serializer.save(profile=profile)
+        image_url = self.request.data.get('image_url', '')  # get it from raw request
+        post = serializer.save(profile=profile)
+        if image_url:
+            Photo.objects.create(post=post, image_url=image_url)
