@@ -11,7 +11,7 @@
 <p style="color:#666; margin-bottom: 25px;">
     To create a trip, go to your Bucket List and click “Plan Trip” next to a destination.
 </p>
-<!-- grid container that holds all trip plan cards -->
+
 <div class="feed-grid">
     {% for trip in trips %}
     <div class="feed-item">
@@ -24,34 +24,58 @@
         <p><strong>Traveler:</strong> {{ trip.user.name }}</p>
         <p><strong>Date:</strong> {{ trip.travel_date }}</p>
         <p><strong>Budget:</strong> ${{ trip.budget }}</p>
-        <!-- only render the notes paragraph if the trip has notes -->
+
         {% if trip.notes %}
         <p>{{ trip.notes }}</p>
         {% endif %}
-        <!-- show edit/delete/itinerary controls only to the trip's owner -->
+
         {% if user.is_authenticated and trip.user.user == user %}
-        <p>
-            <a href="{% url 'update_trip' trip.pk %}">Edit</a>
-            |
-            <a href="{% url 'delete_trip' trip.pk %}">Delete</a>
-            |
-            <a href="{% url 'create_itinerary' trip.pk %}">Add Itinerary Item</a>
-        </p>
+        <div style="display:flex; gap:8px; flex-wrap:wrap; margin-top:14px; margin-bottom:18px;">
+            <a href="{% url 'update_trip' trip.pk %}"
+                style="background:#fef3c7; color:#92400e; padding:8px 12px; border-radius:10px; text-decoration:none; font-weight:700; font-size:14px;">
+                Edit
+            </a>
+
+            <a href="{% url 'delete_trip' trip.pk %}"
+                style="background:#fee2e2; color:#b91c1c; padding:8px 12px; border-radius:10px; text-decoration:none; font-weight:700; font-size:14px;">
+                Delete
+            </a>
+
+            <a href="{% url 'create_itinerary' trip.pk %}"
+                style="background:#e0f2fe; color:#0369a1; padding:8px 12px; border-radius:10px; text-decoration:none; font-weight:700; font-size:14px;">
+                + Add Itinerary
+            </a>
+        </div>
         {% endif %}
 
-        <h4>Itinerary</h4>
-         <!-- loop through itinerary items ordered by day/time (set in the view queryset) -->
+        <h4 style="margin-top:20px; margin-bottom:12px; color:#1e293b;">
+            Itinerary
+        </h4>
+
         {% for item in trip.itinerary_items.all %}
-        <a href="{% url 'delete_itinerary' item.pk %}">Delete</a>
-        <p>
-            <strong>Day {{ item.day }}:</strong>
-            {{ item.activity }}
-            {% if item.location %} at {{ item.location }}{% endif %}
-            {% if item.time %} · {{ item.time }}{% endif %}
-        </p>
+        <div style="
+            background:#f8fafc;
+            padding:12px;
+            border-radius:12px;
+            margin-bottom:10px;
+            border:1px solid #e2e8f0;
+        ">
+            <p style="margin:0 0 8px 0;">
+                <strong>Day {{ item.day }}:</strong>
+                {{ item.activity }}
+                {% if item.location %} at {{ item.location }}{% endif %}
+                {% if item.time %} · {{ item.time }}{% endif %}
+            </p>
+
+            {% if user.is_authenticated and trip.user.user == user %}
+            <a href="{% url 'delete_itinerary' item.pk %}"
+                style="background:#fee2e2; color:#b91c1c; padding:6px 10px; border-radius:8px; text-decoration:none; font-size:12px; font-weight:700;">
+                Delete
+            </a>
+            {% endif %}
+        </div>
         {% empty %}
-        <!-- shown when the trip has no itinerary items yet -->
-        <p>No itinerary items yet.</p>
+        <p style="color:#64748b;">No itinerary items yet.</p>
         {% endfor %}
     </div>
     {% empty %}
