@@ -6,12 +6,19 @@
 
 {% block content %}
 
-<h2>Add Itinerary Item</h2>
+<div style="max-width:650px; margin:50px auto;">
+    <div style="background:white; padding:35px; border-radius:18px; box-shadow:0 10px 30px rgba(0,0,0,0.08);">
+        <h2 style="font-size:32px; margin-bottom:25px;">🗓️ Add Itinerary Item</h2>
 
-<form method="POST">
-    {% csrf_token %}
-    {{ form.as_p }}
-    <button type="submit">Add Item</button>
-</form>
+        <form method="POST">
+            {% csrf_token %}
+            {{ form.as_p }}
+
+            <button type="submit" style="width:100%; background:#0f766e; color:white; border:none; padding:14px; border-radius:12px; font-weight:700; font-size:16px; cursor:pointer;">
+                + Add Item
+            </button>
+        </form>
+    </div>
+</div>
 
 {% endblock %}

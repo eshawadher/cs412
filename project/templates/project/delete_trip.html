@@ -5,13 +5,27 @@
 {% extends 'project/base.html' %}
 
 {% block content %}
-<h2>Delete Trip Plan</h2>
 
-<p>Are you sure you want to delete {{ object }}?</p>
+<div style="max-width:600px; margin:60px auto;">
+    <div style="background:white; padding:35px; border-radius:18px; box-shadow:0 10px 30px rgba(0,0,0,0.08); text-align:center;">
+        <h2 style="font-size:30px; margin-bottom:15px;">🗑️ Delete Trip Plan</h2>
 
-<form method="POST">
-    {% csrf_token %}
-    <input type="submit" value="Delete">
-</form>
+        <p style="font-size:17px; color:#475569; margin-bottom:30px;">
+            Are you sure you want to delete <strong>{{ object }}</strong>?
+        </p>
+
+        <form method="POST">
+            {% csrf_token %}
+
+            <button type="submit" style="background:#dc2626; color:white; border:none; padding:13px 24px; border-radius:12px; font-weight:700; cursor:pointer;">
+                Delete
+            </button>
+
+            <a href="{% url 'trips' %}" style="text-decoration:none; color:#0f766e; border:1px solid #0f766e; padding:13px 24px; border-radius:12px; font-weight:700; margin-left:10px;">
+                Cancel
+            </a>
+        </form>
+    </div>
+</div>
 
 {% endblock %}
