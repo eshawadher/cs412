@@ -1,0 +1,108 @@
+<!-- # File: show_destination.html
+# Author: Esha Wadher (eshaaw@bu.edu), 04/19/2026
+# Description:
+# show the destination page -->
+
+{% extends 'project/base.html' %}
+
+{% block content %}
+
+<!-- display the destination name as the page heading -->
+<h2>{{ destination.name }}</h2>
+
+<!-- only render the image if one has been uploaded for this destination -->
+{% if destination.image %}
+<img src="{{ destination.image.url }}" style="width:130px; height:85px; object-fit:cover; border-radius:12px;">
+{% endif %}
+
+<p><strong>Country:</strong> {{ destination.country.name }}</p>
+<p>{{ destination.description }}</p>
+
+<!-- only show the bucket list button to logged-in users -->
+{% if user.is_authenticated %}
+<p>
+    <a class="button-link" href="{% url 'create_bucket' destination.pk %}">
+        + Add to Bucket List
+    </a>
+</p>
+{% endif %}
+
+
+<!-- itinerary ideas -->
+<h3>Potential Itinerary Ideas ✈️</h3>
+
+{% for item in potential_itinerary_items %}
+<!-- each itinerary idea is rendered as a card -->
+<div class="feed-item">
+    <p>
+        <strong>Day {{ item.day }}:</strong> {{ item.activity }}
+    </p>
+    {% if item.location %}
+    <p><strong>Location:</strong> {{ item.location }}</p>
+    {% endif %}
+
+    {% if item.time %}
+    <p><strong>Time:</strong> {{ item.time }}</p>
+    {% endif %}
+
+    {% if item.notes %}
+    <p>{{ item.notes }}</p>
+    {% endif %}
+
+    <!-- credit the user whose trip plan this itinerary item belongs to -->
+    <p style="color:#666;">
+        From {{ item.trip.user.name }}'s trip
+    </p>
+</div>
+{% empty %}
+<!-- shown when no itinerary items exist for this destination across all trips -->
+<p>No itinerary ideas yet. Add itinerary items from your trip page.</p>
+{% endfor %}
+
+
+<!-- comments section: loops over all comments for this destination via the model method -->
+<h3>Comments</h3>
+{% for comment in destination.get_comments %}
+<p><strong>{{ comment.user.name }}:</strong> {{ comment.text }}</p>
+{% empty %}
+<p>No comments yet.</p>
+{% endfor %}
+
+
+<!-- ratings-->
+<h3>Ratings</h3>
+
+{% for rating in destination.ratings.all %}
+<div class="feed-item">
+    <p><strong>{{ rating.user.name }}</strong>: ⭐ {{ rating.rating }}/10</p>
+    <p>{{ rating.review }}</p>
+</div>
+{% empty %}
+<p>No ratings yet.</p>
+{% endfor %}
+
+<!-- only show the rate button to logged-in users -->
+{% if user.is_authenticated %}
+<a class="button-link" href="{% url 'create_rating' destination.pk %}">
+    Rate this Destination
+</a>
+{% endif %}
+
+<!-- comment button styled as an outlined teal button-->
+<p>
+    <a href="{% url 'create_comment' destination.pk %}" style="
+                display:inline-block;
+                text-decoration:none;
+                background:white;
+                color:#0f766e;
+                border:1px solid #0f766e;
+                padding:12px 20px;
+                border-radius:12px;
+                font-weight:700;
+                margin-top:12px;
+        ">
+        💬 Add Comment
+    </a>
+</p>
+
+{% endblock %}

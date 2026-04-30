@@ -1,0 +1,52 @@
+<!-- # File: create_destination.html
+# Author: Esha Wadher (eshaaw@bu.edu), 04/19/2026
+# Description:
+# add the city for a specific country. also links to button that allows you to add teh country if not there-->
+{% extends 'project/base.html' %}
+
+{% block content %}
+
+<div style="max-width:700px; margin:50px auto;">
+
+    <h2 style="font-size:34px; margin-bottom:10px;">🌍 Add a New Destination</h2>
+
+    <p style="color:#64748b; margin-bottom:25px;">
+        Don’t see the country?
+        <a href="{% url 'create_country' %}" style="color:#0f766e; font-weight:600;">
+            Add a new country
+        </a>
+    </p>
+
+    <div style="
+        background:white;
+        padding:35px;
+        border-radius:18px;
+        box-shadow:0 10px 30px rgba(0,0,0,0.08);
+    ">
+
+        <form method="POST" action="{% url 'create_destination' %}" enctype="multipart/form-data">
+            {% csrf_token %}
+
+            {{ form }}
+
+            <button type="submit" style="
+                    margin-top:25px;
+                    width:100%;
+                    background:#0f766e;
+                    color:white;
+                    border:none;
+                    padding:14px;
+                    border-radius:12px;
+                    font-weight:700;
+                    font-size:16px;
+                    cursor:pointer;
+                    box-shadow:0 6px 14px rgba(15,118,110,0.25);
+                ">
+                + Create Destination
+            </button>
+
+        </form>
+    </div>
+</div>
+
+{% endblock %}

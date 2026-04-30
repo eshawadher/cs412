@@ -1,0 +1,63 @@
+<!-- # File: delete_bucket.html
+# Author: Esha Wadher (eshaaw@bu.edu), 04/19/2026
+# Description:
+# delete an entry from teh bucket list. page/button for it -->
+{% extends 'project/base.html' %}
+
+{% block content %}
+
+<div style="max-width:600px; margin:60px auto;">
+
+    <div style="
+        background:white;
+        padding:35px;
+        border-radius:18px;
+        box-shadow:0 10px 30px rgba(0,0,0,0.08);
+        text-align:center;
+    ">
+
+        <h2 style="font-size:30px; color:#1e293b; margin-bottom:15px;">
+            🗑️ Delete Bucket List Entry
+        </h2>
+
+        <p style="font-size:17px; color:#475569; margin-bottom:30px;">
+            Are you sure you want to delete
+            <strong>{{ object.destination.name }}</strong>?
+        </p>
+
+        <form method="POST">
+            {% csrf_token %}
+
+            <button type="submit" style="
+                background:#dc2626;
+                color:white;
+                border:none;
+                padding:13px 24px;
+                border-radius:12px;
+                font-weight:700;
+                font-size:15px;
+                cursor:pointer;
+                box-shadow:0 6px 14px rgba(220,38,38,0.25);
+                margin-right:10px;
+            ">
+                Delete
+            </button>
+
+            <a href="{% url 'bucket_list' %}" style="
+                text-decoration:none;
+                color:#0f766e;
+                border:1px solid #0f766e;
+                padding:13px 24px;
+                border-radius:12px;
+                font-weight:700;
+            ">
+                Cancel
+            </a>
+
+        </form>
+
+    </div>
+
+</div>
+
+{% endblock %}

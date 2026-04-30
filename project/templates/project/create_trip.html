@@ -1,0 +1,58 @@
+<!-- # File: create_trip.html
+# Author: Esha Wadher (eshaaw@bu.edu), 04/19/2026
+# Description:
+# page that allows you to create the trip plan after being added to bucket lsit -->
+{% extends 'project/base.html' %}
+
+{% block content %}
+
+<div style="max-width:650px; margin:50px auto;">
+
+    <div style="
+        background:white;
+        padding:35px;
+        border-radius:18px;
+        box-shadow:0 10px 30px rgba(0,0,0,0.08);
+    ">
+
+        <h2 style="font-size:32px; margin-bottom:20px; color:#1e293b;">
+            ✈️ Create Trip Plan
+        </h2>
+
+        <div style="
+            background:#ecfdf5;
+            color:#065f46;
+            padding:14px 16px;
+            border-radius:12px;
+            margin-bottom:25px;
+            font-weight:600;
+        ">
+            Destination: {{ entry.destination.name }}, {{ entry.destination.country.name }}
+        </div>
+
+        <form method="POST">
+            {% csrf_token %}
+
+            {{ form.as_p }}
+
+            <button type="submit" style="
+                width:100%;
+                margin-top:20px;
+                background:#0f766e;
+                color:white;
+                border:none;
+                padding:14px;
+                border-radius:12px;
+                font-weight:700;
+                font-size:16px;
+                cursor:pointer;
+                box-shadow:0 6px 14px rgba(15,118,110,0.25);
+            ">
+                + Create Trip
+            </button>
+        </form>
+
+    </div>
+</div>
+
+{% endblock %}

@@ -1,0 +1,56 @@
+<!-- # File: update_trip.html
+# Author: Esha Wadher (eshaaw@bu.edu), 04/19/2026
+# Description:
+# creates the update bucket list page -->
+
+{% extends 'project/base.html' %}
+
+{% block content %}
+
+<div style="max-width:650px; margin:50px auto;">
+
+    <h2 style="font-size:32px; margin-bottom:20px;">
+        ✏️ Update Bucket List Entry
+    </h2>
+    <!--style-->
+    <div style="
+        background:white;
+        padding:35px;
+        border-radius:18px;
+        box-shadow:0 10px 30px rgba(0,0,0,0.08);
+    ">
+    <!-- gorm submits via POST to the current URL, routing to BucketListEntryUpdateView -->  
+        <form method="POST">
+            {% csrf_token %}
+            <!--styling-->
+            <label style="font-weight:700;">Destination</label>
+            {{ form.destination }}
+
+            <label style="font-weight:700; margin-top:15px; display:block;">Priority</label>
+            {{ form.priority }}
+
+            <label style="font-weight:700; margin-top:15px; display:block;">Status</label>
+            {{ form.status }}
+
+            <label style="font-weight:700; margin-top:15px; display:block;">Notes</label>
+            {{ form.notes }}
+
+            <button type="submit" style="
+                    margin-top:25px;
+                    background:linear-gradient(135deg,#0ea5e9,#0284c7);
+                    color:white;
+                    border:none;
+                    padding:12px 26px;
+                    border-radius:999px;
+                    font-weight:700;
+                    cursor:pointer;
+                    box-shadow:0 6px 14px rgba(0,0,0,0.15);
+                ">
+                ✔ Update
+            </button>
+
+        </form>
+    </div>
+</div>
+
+{% endblock %}

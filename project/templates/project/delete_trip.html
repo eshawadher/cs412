@@ -1,0 +1,17 @@
+<!-- # File: delete_trip.html
+# Author: Esha Wadher (eshaaw@bu.edu), 04/19/2026
+# Description:
+# button so that i can delte the trip-->
+{% extends 'project/base.html' %}
+
+{% block content %}
+<h2>Delete Trip Plan</h2>
+
+<p>Are you sure you want to delete {{ object }}?</p>
+
+<form method="POST">
+    {% csrf_token %}
+    <input type="submit" value="Delete">
+</form>
+
+{% endblock %}

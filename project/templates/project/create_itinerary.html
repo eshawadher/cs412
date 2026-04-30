@@ -1,0 +1,17 @@
+<!-- # File: create_itinerary.html
+# Author: Esha Wadher (eshaaw@bu.edu), 04/19/2026
+# Description:
+# create the itinerary for the specific trip-->
+{% extends 'project/base.html' %}
+
+{% block content %}
+
+<h2>Add Itinerary Item</h2>
+
+<form method="POST">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">Add Item</button>
+</form>
+
+{% endblock %}

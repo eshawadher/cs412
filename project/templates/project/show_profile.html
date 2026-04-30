@@ -1,0 +1,249 @@
+<!-- # File: show_profile.html
+# Author: Esha Wadher (eshaaw@bu.edu), 04/19/2026
+# Description:
+# creates the user profile page -->
+
+{% extends 'project/base.html' %}
+
+{% block content %}
+
+<!-- display the user's name as the page heading -->
+<h2>{{ profile.name }}</h2>
+
+<!-- opnly render the profile picture if one has been uploaded -->
+{% if profile.profile_pic %}
+<img src="{{ profile.profile_pic.url }}" class="profile-pic">
+{% endif %}
+
+<p><strong>Age:</strong> {{ profile.age }}</p>
+<p>{{ profile.biography }}</p>
+<p><strong>Places traveled:</strong> {{ profile.places_traveled }}</p>
+
+<!-- summary stats grid-->
+<div class="stats-grid">
+    <div class="stat-card">
+        <h3>{{ visited_count }}</h3>
+        <p>Visited</p>
+    </div>
+
+    <div class="stat-card">
+        <h3>{{ upcoming_count }}</h3>
+        <p>Upcoming Trips</p>
+    </div>
+
+    <div class="stat-card">
+        <h3>{{ wishlist_count }}</h3>
+        <p>Wishlist</p>
+    </div>
+
+    <div class="stat-card">
+        <h3>${{ total_budget }}</h3>
+        <p>Total Budget</p>
+    </div>
+</div>
+
+<h3 style="color:#0f766e; font-size:26px; margin-top:30px;">
+    {{ profile.name }}'s Travel Map
+</h3>
+
+<!-- filter buttons that re-render the map to highlight different country categories -->
+<div style="
+    display:flex;
+    gap:12px;
+    margin:15px 0 25px;
+    flex-wrap:wrap;
+">
+    <button onclick="showMap('all')" style="
+        padding:10px 18px;
+        border-radius:999px;
+        border:none;
+        background:#0f766e;
+        color:white;
+        font-weight:600;
+        cursor:pointer;
+        box-shadow:0 6px 14px rgba(15,118,110,0.25);
+    ">
+        All
+    </button>
+
+    <button onclick="showMap('visited')" style="
+        padding:10px 18px;
+        border-radius:999px;
+        border:1px solid #cbd5e1;
+        background:white;
+        color:#334155;
+        font-weight:600;
+        cursor:pointer;
+    ">
+        Visited
+    </button>
+
+    <button onclick="showMap('upcoming')" style="
+        padding:10px 18px;
+        border-radius:999px;
+        border:1px solid #cbd5e1;
+        background:white;
+        color:#334155;
+        font-weight:600;
+        cursor:pointer;
+    ">
+        Upcoming
+    </button>
+
+    <button onclick="showMap('bucket')" style="
+        padding:10px 18px;
+        border-radius:999px;
+        border:1px solid #cbd5e1;
+        background:white;
+        color:#334155;
+        font-weight:600;
+        cursor:pointer;
+    ">
+        Wishlist
+    </button>
+</div>
+
+<!-- map container -->
+<div id="profile-map" style="
+    height:450px;
+    width:100%;
+    margin-bottom:25px;
+    border-radius:18px;
+    overflow:hidden;
+    background:#f8fafc;
+"></div>
+
+<script>
+    // country code arrays 
+    const visitedCountries = {{ visited_codes| safe }};
+    const upcomingCountries = {{ upcoming_codes| safe }};
+    const bucketCountries = {{ bucket_codes| safe }};
+
+    // mapping of country code 
+    const countryLinks = {{ country_links| safe }};
+
+    /**
+     * Builds the values object passed to jsVectorMap's series.regions,
+     */
+    function buildValues(type) {
+        const values = {};
+
+        if (type === "all" || type === "visited") {
+            visitedCountries.forEach(code => values[code] = "visited");
+        }
+
+        if (type === "all" || type === "upcoming") {
+            upcomingCountries.forEach(code => values[code] = "upcoming");
+        }
+
+        if (type === "all" || type === "bucket") {
+            bucketCountries.forEach(code => values[code] = "bucket");
+        }
+
+        return values;
+    }
+
+    /**
+     * Updates filter button styles so only the active button appears teal.
+     */
+    function setActiveButton(type) {
+        const buttons = document.querySelectorAll(".map-filter-btn");
+
+        buttons.forEach(button => {
+            button.style.background = "white";
+            button.style.color = "#334155";
+            button.style.border = "1px solid #cbd5e1";
+            button.style.boxShadow = "none";
+        });
+
+        const activeButton = document.querySelector(`[data-map-filter="${type}"]`);
+
+        if (activeButton) {
+            activeButton.style.background = "#0f766e";
+            activeButton.style.color = "white";
+            activeButton.style.border = "none";
+            activeButton.style.boxShadow = "0 6px 14px rgba(15,118,110,0.25)";
+        }
+    }
+
+    /**
+     * Clears and re-renders the jsVectorMap with countries highlighted
+     */
+    function showMap(type) {
+        document.querySelector("#profile-map").innerHTML = "";
+        setActiveButton(type);
+
+        new jsVectorMap({
+            selector: "#profile-map",
+            map: "world",
+            zoomButtons: true,
+            regionStyle: {
+                initial: {
+                    fill: "#d6d6d6",
+                    stroke: "#ffffff",
+                    strokeWidth: 0.5
+                }
+            },
+            series: {
+                regions: [{
+                    attribute: "fill",
+                    scale: {
+                        visited: "#1f77b4",
+                        upcoming: "#ff66c4",
+                        bucket: "#f4c542"
+                    },
+                    values: buildValues(type)
+                }]
+            },
+            onRegionClick: function (event, code) {
+                // Navigate to the country detail page
+                if (countryLinks[code]) {
+                    window.location.href = countryLinks[code];
+                }
+            }
+        });
+    }
+
+    // Render the all
+    showMap("all");
+</script>
+
+<!-- Bucket list-->
+<h3>Bucket List</h3>
+
+<a href="{% url 'bucket_list' %}" style="text-decoration: none; color: inherit;">
+    {% for entry in profile.get_bucket_list %}
+    <div class="feed-item">
+        <p>
+            <strong>{{ entry.destination.name }}</strong>
+            <span class="badge">{{ entry.get_status_display }}</span>
+            <span class="badge">Priority: {{ entry.get_priority_display }}</span>
+        </p>
+    </div>
+    {% endfor %}
+</a>
+{% if not profile.get_bucket_list %}
+<p>No bucket list entries yet.</p>
+{% endif %}
+<h3>Trip Plans</h3>
+
+<a href="{% url 'trips' %}" style="text-decoration: none; color: inherit;">
+    {% for trip in profile.get_trip_plans %}
+    <div class="feed-item">
+        <p>
+            <strong>{{ trip.entry.destination.name }}</strong>
+            on {{ trip.travel_date }}
+        </p>
+
+        <span class="badge">{{ trip.get_status_display }}</span>
+
+        <p>Budget: ${{ trip.budget }}</p>
+    </div>
+    {% endfor %}
+</a>
+
+{% if not profile.get_trip_plans %}
+<p>No trips planned yet.</p>
+{% endif %}
+
+{% endblock %}

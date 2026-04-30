@@ -1,0 +1,311 @@
+/* File: styles-project.css
+Author: Esha Wadher
+Description: Styling for Travel Bucket List final project
+*/
+
+body {
+    margin: 0;
+    background: #f4f7fb;
+    font-family: Arial, Helvetica, sans-serif;
+    color: #1f2937;
+}
+
+header {
+    background: linear-gradient(135deg, #0f766e, #38bdf8);
+    color: white;
+    padding: 35px 70px;
+}
+
+header h1 {
+    margin: 0;
+    font-size: 42px;
+    letter-spacing: 1px;
+}
+
+header p {
+    margin-top: 8px;
+    font-size: 17px;
+}
+
+nav {
+    margin-top: 20px;
+}
+
+nav a,
+nav button {
+    margin-right: 18px;
+    color: white;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+nav a:hover,
+nav button:hover {
+    text-decoration: underline;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 35px auto;
+    background: white;
+    padding: 35px;
+    border-radius: 18px;
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.08);
+}
+
+h2 {
+    font-size: 32px;
+    margin-top: 0;
+    color: #111827;
+}
+
+h3 {
+    color: #0f766e;
+    margin-top: 30px;
+}
+
+a {
+    color: #0284c7;
+}
+
+.map-card {
+    background: #f8fafc;
+    padding: 20px;
+    border-radius: 18px;
+    margin-bottom: 30px;
+}
+
+.grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 18px;
+}
+
+.card {
+    background: #ffffff;
+    border: 1px solid #e5e7eb;
+    border-radius: 16px;
+    padding: 18px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+}
+
+.card:hover {
+    transform: translateY(-3px);
+    transition: 0.2s;
+}
+
+.feed-item {
+    background: #f8fafc;
+    border-left: 5px solid #38bdf8;
+    padding: 16px;
+    margin-bottom: 14px;
+    border-radius: 12px;
+}
+
+.badge {
+    display: inline-block;
+    padding: 5px 11px;
+    border-radius: 20px;
+    font-size: 13px;
+    background: #e0f2fe;
+    color: #0369a1;
+    font-weight: bold;
+}
+
+.profile-pic {
+    width: 180px;
+    height: 180px;
+    object-fit: cover;
+    border-radius: 50%;
+    margin-bottom: 20px;
+    border: 5px solid #e0f2fe;
+}
+
+.destination-card {
+    position: relative;
+    height: 230px;
+    border-radius: 18px;
+    overflow: hidden;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.12);
+}
+
+.destination-card img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.card-overlay {
+    position: absolute;
+    inset: 0;
+    background: rgba(0,0,0,0.35);
+    color: white;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+}
+
+.card-overlay h3 {
+    color: white;
+    font-size: 30px;
+    margin: 0;
+}
+
+.card-overlay a {
+    color: white;
+    border: 1px solid white;
+    padding: 8px 18px;
+    border-radius: 999px;
+    text-decoration: none;
+    margin-top: 10px;
+}
+
+.stats-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 15px;
+    margin: 25px 0;
+}
+
+.stat-card {
+    background: #f8fafc;
+    padding: 18px;
+    border-radius: 16px;
+    text-align: center;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.06);
+}
+
+.stat-card h3 {
+    font-size: 28px;
+    margin: 0;
+}
+
+.search-form {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 25px;
+}
+
+.search-form input {
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+}
+
+.search-form button {
+    padding: 10px 18px;
+    border: none;
+    border-radius: 10px;
+    background: #0a7c6b;
+    color: white;
+}
+
+.feed-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 18px;
+}
+
+.feed-item {
+    background: #f8fafc;
+    border-left: 5px solid #38bdf8;
+    padding: 18px;
+    margin-bottom: 14px;
+    border-radius: 14px;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.feed-item:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 20px rgba(0,0,0,0.12);
+}
+
+.button-link {
+    display: inline-block;
+    padding: 9px 16px;
+    border-radius: 999px;
+    background: #0a7c6b;
+    color: white;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.form-card {
+    max-width: 850px;
+    margin: 35px auto;
+    background: white;
+    padding: 35px;
+    border-radius: 16px;
+    box-shadow: 0 12px 35px rgba(0, 0, 0, 0.08);
+}
+
+.form-card h2 {
+    font-size: 34px;
+    margin-bottom: 20px;
+    color: #111827;
+}
+
+.form-card p {
+    margin-bottom: 18px;
+}
+
+.form-card label {
+    font-weight: 700;
+    display: block;
+    margin-bottom: 6px;
+}
+
+.form-card input,
+.form-card select,
+.form-card textarea {
+    width: 100%;
+    max-width: 520px;
+    padding: 12px;
+    border: 1px solid #cbd5e1;
+    border-radius: 10px;
+    font-size: 15px;
+    margin-bottom: 16px;
+}
+
+.form-card textarea {
+    min-height: 130px;
+}
+
+.form-card button,
+.form-card input[type="submit"] {
+    background: #0f766e;
+    color: white;
+    border: none;
+    padding: 12px 22px;
+    border-radius: 999px;
+    font-weight: 700;
+    cursor: pointer;
+}
+
+.form-card button:hover,
+.form-card input[type="submit"]:hover {
+    background: #115e59;
+}
+
+.form-card a {
+    color: #0077cc;
+    font-weight: 600;
+}
+
+
+.destination-link {
+    text-decoration: none;
+    background: #e6f7ff;
+    color: #0077aa;
+    padding: 4px 8px;
+    border-radius: 999px;
+    font-weight: 600;
+}
+
+.destination-link:hover {
+    background: #ccefff;
+    color: #005f88;
+}
+

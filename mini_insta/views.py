@@ -26,6 +26,8 @@ from .serializers import ProfileSerializer, PostSerializer
 
 
 
+
+
 # Create your views here.
 
 class ProfileAuthMixin(LoginRequiredMixin):

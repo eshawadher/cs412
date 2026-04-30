@@ -1,0 +1,121 @@
+<!-- # File: create_rating.html
+# Author: Esha Wadher (eshaaw@bu.edu), 04/19/2026
+# Description:
+# Base template for the project website. This file defines the
+overall page layout and includes the shared navigation bar and
+content blocks that other templates extend.-->
+{% load static %}
+<html>
+
+<head>
+    <title>Travel Bucket List</title>
+
+    <link rel="stylesheet" href="{% static 'styles-project.css' %}">
+
+    <!-- map -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/jsvectormap/dist/css/jsvectormap.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/jsvectormap"></script>
+    <script src="https://cdn.jsdelivr.net/npm/jsvectormap/dist/maps/world.js"></script>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            background-color: #f1f5f9;
+        }
+
+        .main-container {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- header-->
+    <div style="
+        background:white;
+        padding:25px 40px;
+        box-shadow:0 4px 18px rgba(0,0,0,0.06);
+        margin-bottom:30px;
+    ">
+
+        <div style="max-width:1100px; margin:0 auto;">
+
+            <!--  ttile -->
+            <h1 style="
+                margin:0 0 15px 0;
+                font-size:36px;
+                color:#1e293b;
+            ">
+                🌍 Travel Bucket List
+            </h1>
+
+            <!-- nac-->
+            <div style="
+                display:flex;
+                align-items:center;
+                gap:18px;
+                flex-wrap:wrap;
+            ">
+
+                <a href="{% url 'destinations' %}"
+                    style="text-decoration:none; color:#0f766e; font-weight:700;">Destinations</a>
+                <a href="{% url 'profiles' %}"
+                    style="text-decoration:none; color:#0f766e; font-weight:700;">Profiles</a>
+
+                {% if user.is_authenticated %}
+                <a href="{% url 'bucket_list' %}" style="text-decoration:none; color:#0f766e; font-weight:700;">My
+                    Bucket List</a>
+                <a href="{% url 'trips' %}" style="text-decoration:none; color:#0f766e; font-weight:700;">My Trips</a>
+                <a href="{% url 'my_profile' %}" style="text-decoration:none; color:#0f766e; font-weight:700;">My
+                    Profile</a>
+
+                <span style="color:#64748b;">
+                    Logged in as <strong>{{ user.username }}</strong>
+                </span>
+
+                <!-- logout button -->
+                <form method="POST" action="{% url 'logout' %}" style="display:inline;">
+                    {% csrf_token %}
+                    <button type="submit" style="
+                            background:#0f766e;
+                            color:white;
+                            border:none;
+                            padding:8px 14px;
+                            border-radius:999px;
+                            font-weight:700;
+                            cursor:pointer;
+                        ">
+                        Logout
+                    </button>
+                </form>
+                {% else %}
+                <a href="{% url 'login' %}" style="
+                        text-decoration:none;
+                        background:#0f766e;
+                        color:white;
+                        padding:8px 16px;
+                        border-radius:999px;
+                        font-weight:700;
+                        box-shadow:0 4px 10px rgba(15,118,110,0.25);
+                    ">
+                    Login
+                </a>
+                {% endif %}
+            </div>
+
+        </div>
+    </div>
+
+    <!--page -->
+    <div class="main-container">
+        {% block content %}
+        {% endblock %}
+    </div>
+
+</body>
+
+</html>

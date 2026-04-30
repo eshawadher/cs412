@@ -1,0 +1,17 @@
+<!-- # File: update_trip.html
+# Author: Esha Wadher (eshaaw@bu.edu), 04/19/2026
+# Description:
+# creates the update trip page -->
+{% extends 'project/base.html' %}
+
+{% block content %}
+
+<h2>Update Trip Plan</h2>
+<!-- form submits via POST to the current URL, which routes to TripPlanUpdateView -->
+<form method="POST">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <input type="submit" value="Update">
+</form>
+
+{% endblock %}

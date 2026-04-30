@@ -1,0 +1,48 @@
+<!-- # File: create_rating.html
+# Author: Esha Wadher (eshaaw@bu.edu), 04/19/2026
+# Description:
+# create the rating for a specific city / trip-->
+{% extends 'project/base.html' %}
+
+{% block content %}
+
+<div style="max-width:700px; margin:50px auto;">
+
+    <h2 style="font-size:34px; margin-bottom:25px;">⭐ Rate Destination</h2>
+
+    <div style="
+        background:white;
+        padding:35px;
+        border-radius:18px;
+        box-shadow:0 10px 30px rgba(0,0,0,0.08);
+    ">
+
+        <form method="POST">
+            {% csrf_token %}
+
+            {{ form.as_p }}
+
+            <button type="submit" style="
+                    margin-top:20px;
+                    width:100%;
+                    background:#0f766e;
+                    color:white;
+                    border:none;
+                    padding:14px;
+                    border-radius:12px;
+                    font-weight:700;
+                    font-size:16px;
+                    cursor:pointer;
+                    box-shadow:0 6px 14px rgba(15,118,110,0.25);
+                    transition:0.2s;
+                " onmouseover="this.style.transform='translateY(-2px)'"
+                onmouseout="this.style.transform='translateY(0px)'">
+                Submit Rating
+            </button>
+
+        </form>
+
+    </div>
+</div>
+
+{% endblock %}
